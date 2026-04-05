@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistical Errors | Andromechanic's Stats Adventure</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="vguide.css">
+    <style>
+        .error-grid div { transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); cursor: default; }
+        .error-grid div:hover { transform: scale(1.02); filter: brightness(1.1); }
+        .alpha-range::-webkit-slider-runnable-track { background: linear-gradient(to right, #f43f5e, #10b981); height: 8px; border-radius: 4px; }
+    </style>
+</head>
+<body class="p-4 md:p-16">
+    <div class="max-w-4xl mx-auto">
+        <!-- Main Header -->
+        <header class="text-center mb-24">
+            <div class="badge bg-slate-900 text-white mb-6 uppercase tracking-[0.2em] font-bold">
+                The Matrix of Uncertainty
+            </div>
+            <h1 class="text-5xl md:text-6xl font-black italic tracking-tighter mb-6 title-gradient leading-tight">
+                Statistical <br> Errors
+            </h1>
+            <p class="text-xl text-slate-400 font-light tracking-wide italic max-w-2xl mx-auto leading-relaxed">
+                The inevitable trade-off between accidental alarm and missed discovery.
+            </p>
+        </header>
+
+        <!-- 01 The Confusion Matrix -->
+        <section class="card border-t-8 border-slate-900">
+            <div class="flex items-center gap-3 mb-12">
+                <span class="w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-slate-200">01</span>
+                <h2 class="text-3xl font-extrabold tracking-tight text-slate-800">The 2x2 Gauntlet</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 error-grid">
+                <!-- Correct: True Negative -->
+                <div class="p-10 bg-emerald-50 border border-emerald-100 rounded-[2.5rem]">
+                    <h4 class="text-[10px] font-black uppercase text-emerald-400 mb-4 tracking-[0.4em]">Correct Decision</h4>
+                    <p class="text-xl font-black italic text-emerald-700 mb-2">No Effect Found.</p>
+                    <p class="text-xs text-slate-500 italic leading-relaxed font-medium">True Negative. You correctly failed to reject $H_0$.</p>
+                </div>
+
+                <!-- Type I Error -->
+                <div class="p-10 bg-rose-50 border border-rose-100 rounded-[2.5rem] shadow-xl shadow-rose-500/5">
+                    <h4 class="text-[10px] font-black uppercase text-rose-500 mb-4 tracking-[0.4em]">Type I Error (\(\alpha\))</h4>
+                    <p class="text-xl font-black italic text-rose-700 mb-2">False Alarm.</p>
+                    <p class="text-xs text-slate-500 italic leading-relaxed font-medium">Rejecting $H_0$ when it's actually true. Reporting an effect that isn't really there.</p>
+                </div>
+
+                <!-- Type II Error -->
+                <div class="p-10 bg-amber-50 border border-amber-100 rounded-[2.5rem] shadow-xl shadow-amber-500/5">
+                    <h4 class="text-[10px] font-black uppercase text-amber-500 mb-4 tracking-[0.4em]">Type II Error (\(\beta\))</h4>
+                    <p class="text-xl font-black italic text-amber-700 mb-2">The Blind Spot.</p>
+                    <p class="text-xs text-slate-500 italic leading-relaxed font-medium">Failing to reject $H_0$ when it's actually false. Missing a real effect that exists.</p>
+                </div>
+
+                <!-- Correct: True Positive -->
+                <div class="p-10 bg-indigo-50 border border-indigo-100 rounded-[2.5rem]">
+                    <h4 class="text-[10px] font-black uppercase text-indigo-400 mb-4 tracking-[0.4em]">Statistical Power</h4>
+                    <p class="text-xl font-black italic text-indigo-700 mb-2">Discovery.</p>
+                    <p class="text-xs text-slate-500 italic leading-relaxed font-medium">True Positive. Correctly identifying a real effect. (\(1 - \beta\)).</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 02 Interactive Section: The Alpha/Beta Trade-off -->
+        <section class="card border-t-8 border-indigo-500">
+            <div class="flex items-center gap-3 mb-8">
+                <span class="w-10 h-10 rounded-xl bg-indigo-500 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-indigo-200">02</span>
+                <h2 class="text-3xl font-extrabold tracking-tight text-slate-800 italic">Interactive: The Sliding Alpha</h2>
+            </div>
+            
+            <div class="p-10 bg-slate-900 rounded-[2.5rem] shadow-2xl relative overflow-hidden mb-12 text-center text-white">
+                <div class="mb-10 w-full h-24 flex items-center justify-center gap-20">
+                    <div id="alphaCircle" class="w-20 h-20 rounded-full bg-rose-500/20 border-4 border-rose-500 flex items-center justify-center text-[10px] font-black uppercase tracking-widest transition-all">Type I</div>
+                    <div id="betaCircle" class="w-32 h-32 rounded-full bg-amber-500/20 border-4 border-amber-500 flex items-center justify-center text-[10px] font-black uppercase tracking-widest transition-all">Type II</div>
+                </div>
+
+                <div class="space-y-6 max-w-sm mx-auto">
+                    <label class="block text-[10px] font-black uppercase text-slate-400 tracking-widest">Adjust Significance ($\alpha$)</label>
+                    <input type="range" id="alphaSlider" min="1" max="100" value="50" class="w-full bg-slate-800 rounded-lg alpha-range transition-all cursor-pointer">
+                    <p id="tradeoffText" class="text-xs text-slate-400 italic">"Lowering the chance of a False Alarm (\(\alpha\)) automatically increases the chance of the Blind Spot (\(\beta\))."</p>
+                </div>
+                
+                <div class="absolute -right-10 -bottom-10 opacity-5 pointer-events-none">
+                    <p class="text-[180px] font-black italic uppercase tracking-tighter italic">SEE SAW</p>
+                </div>
+            </div>
+            <p class="text-[10px] text-center text-slate-400 uppercase tracking-widest leading-loose max-w-lg mx-auto italic underline decoration-indigo-200 decoration-1">
+                "Finding the perfect balance is the art of clinical and statistical research."
+            </p>
+        </section>
+
+        <!-- Footer Navigation Overlay -->
+        <footer class="text-center pb-32">
+            <a href="index.html" class="inline-block px-12 py-4 rounded-full bg-slate-900 text-white font-black uppercase tracking-widest text-xs hover:bg-slate-800 transition-colors shadow-sm mb-12">
+                Back to Adventure Home
+            </a>
+            
+            <div class="grid grid-cols-2 gap-4 max-w-sm mx-auto">
+                <a href="hypothesis_testing.html" class="p-6 rounded-2xl bg-white border border-slate-100 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-rose-400 shadow-sm transition-all hover:-translate-y-1">Hypothesis Prereq</a>
+                <a href="confidence_intervals.html" class="p-6 rounded-2xl bg-white border border-slate-100 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-indigo-400 shadow-sm transition-all hover:-translate-y-1">Next: Confidence</a>
+            </div>
+            
+            <p class="mt-20 text-[10px] opacity-20 font-black uppercase tracking-[0.8em]">End of Error Adventure - Andromechanic</p>
+        </footer>
+    </div>
+
+    <!-- Script -->
+    <script>
+        const slider = document.getElementById('alphaSlider');
+        const alphaCircle = document.getElementById('alphaCircle');
+        const betaCircle = document.getElementById('betaCircle');
+        const tradeoffText = document.getElementById('tradeoffText');
+
+        function update() {
+            const val = parseInt(slider.value);
+            const alphaSize = 20 + (val * 0.6);
+            const betaSize = 80 - (val * 0.6);
+            
+            alphaCircle.style.width = `${alphaSize}px`;
+            alphaCircle.style.height = `${alphaSize}px`;
+            alphaCircle.style.fontSize = `${6 + (val*0.05)}px`;
+            
+            betaCircle.style.width = `${betaSize}px`;
+            betaCircle.style.height = `${betaSize}px`;
+            betaCircle.style.fontSize = `${6 + ( (100-val)*0.05 )}px`;
+
+            if (val < 20) {
+                tradeoffText.innerText = "You are extremely safe from False Alarms, but almost blind to real smaller effects.";
+            } else if (val > 80) {
+                tradeoffText.innerText = "You find everything, but your data is likely riddled with False Alarms.";
+            } else {
+                tradeoffText.innerText = "Finding the balance. A cautious but discovery-focused stance.";
+            }
+        }
+
+        slider.addEventListener('input', update);
+        update();
+    </script>
+</body>
+</html>

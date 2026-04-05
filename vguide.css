@@ -1,0 +1,83 @@
+:root {
+    --bg: #f8fafc;
+    --text: #0f172a;
+    --muted: #64748b;
+    --border: #e2e8f0;
+    --card: #ffffff;
+    --primary: #2563eb;
+    --secondary: #14b8a6;
+    --accent: #f59e0b;
+    --violet: #7c3aed;
+    --rose: #e11d48;
+}
+
+body { 
+    font-family: 'Inter', sans-serif; 
+    background-color: var(--bg); 
+    color: var(--text); 
+}
+
+.math-font { 
+    font-family: 'Fira Code', monospace; 
+}
+
+.title-gradient {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 2.5rem;
+    padding: 2rem;
+    margin-bottom: 2.5rem;
+    box-shadow: 0 14px 30px -20px rgba(15, 23, 42, 0.25);
+    transition: box-shadow 200ms ease;
+}
+
+@media (min-width: 768px) {
+    .card { padding: 3rem; }
+}
+
+.table-header {
+    background: #f8fafc;
+    font-size: 10px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #94a3b8;
+    letter-spacing: 0.2em;
+    padding: 1rem;
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+}
+
+.table-cell {
+    padding: 1rem;
+    text-align: center;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #475569;
+}
+
+.row-label {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #0f172a;
+    background: rgba(241, 245, 249, 0.6);
+}
+
+.badge {
+    padding: 0.35rem 1rem;
+    border-radius: 9999px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    display: inline-block;
+}

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>$\chi^2$ Independence | Andromechanic's Stats Adventure</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="vguide.css">
+</head>
+<body class="p-4 md:p-16">
+    <div class="max-w-4xl mx-auto">
+        <!-- Main Header -->
+        <header class="text-center mb-20">
+            <div class="badge bg-red-100 text-red-700 mb-6 uppercase tracking-[0.2em] font-bold">
+                Categorical Associations
+            </div>
+            <h1 class="text-5xl md:text-6xl font-black italic tracking-tighter mb-6 title-gradient leading-tight">
+                Chi-Square <br> Test of Independence
+            </h1>
+            <p class="text-xl text-slate-400 font-light tracking-wide italic">
+                Determining Associations Between Categorical Variables
+            </p>
+        </header>
+
+        <!-- 01 Core Logic -->
+        <section class="card border-t-8 border-orange-400">
+            <div class="flex items-center gap-3 mb-8">
+                <span class="w-10 h-10 rounded-xl bg-orange-400 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-orange-200">01</span>
+                <h2 class="text-3xl font-extrabold tracking-tight">The Core Logic</h2>
+            </div>
+            <div class="grid md:grid-cols-2 gap-12">
+                <div class="space-y-4">
+                    <h3 class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">The Goal</h3>
+                    <p class="text-slate-600 leading-relaxed text-sm">
+                        Are two variables related? Under <strong>Independence</strong>, the distribution of one variable does not change based on the category of the other.
+                    </p>
+                </div>
+                <div class="space-y-6">
+                    <div class="p-5 bg-emerald-50 rounded-2xl border border-emerald-100">
+                        <p class="text-[10px] font-bold text-emerald-600 uppercase mb-2 tracking-wider">\( H_0 \): Independence</p>
+                        <p class="text-xs text-emerald-800 font-medium italic">"No difference in distribution; variables are unrelated."</p>
+                    </div>
+                    <div class="p-5 bg-rose-50 rounded-2xl border border-rose-100">
+                        <p class="text-[10px] font-bold text-rose-600 uppercase mb-2 tracking-wider">\( H_a \): Dependence</p>
+                        <p class="text-xs text-rose-800 font-medium italic">"Distributions differ; a significant association exists."</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 02 Observed Data -->
+        <section class="card border-t-8 border-red-400">
+            <div class="flex items-center gap-3 mb-8">
+                <span class="w-10 h-10 rounded-xl bg-red-400 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-red-200">02</span>
+                <h2 class="text-3xl font-extrabold tracking-tight">Observed Frequencies ($O$)</h2>
+            </div>
+            <p class="text-sm text-slate-400 mb-6 italic">A 3x2 Contingency Table (Age Category x AI Usage)</p>
+            <div class="overflow-hidden rounded-[1.5rem] border border-slate-100 shadow-sm">
+                <table class="w-full border-collapse bg-white">
+                    <thead>
+                        <tr>
+                            <th class="table-header text-left">Age Group</th>
+                            <th class="table-header">AI: Yes</th>
+                            <th class="table-header">AI: No</th>
+                            <th class="table-header bg-slate-100/50">Row Totals</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="row-label">Under 30</td>
+                            <td class="table-cell">312</td>
+                            <td class="table-cell">178</td>
+                            <td class="table-cell font-bold bg-slate-50/50">490</td>
+                        </tr>
+                        <tr>
+                            <td class="row-label">30 - 50</td>
+                            <td class="table-cell">273</td>
+                            <td class="table-cell">183</td>
+                            <td class="table-cell font-bold bg-slate-50/50">456</td>
+                        </tr>
+                        <tr>
+                            <td class="row-label border-b-0">Over 50</td>
+                            <td class="table-cell border-b-0">224</td>
+                            <td class="table-cell border-b-0">270</td>
+                            <td class="table-cell font-bold bg-slate-50/50 border-b-0">494</td>
+                        </tr>
+                        <tr class="bg-slate-900 text-white">
+                            <td class="p-5 text-[11px] font-bold uppercase tracking-[0.2em] border-0">Col Totals</td>
+                            <td class="p-5 text-center text-sm font-bold border-0">809</td>
+                            <td class="p-5 text-center text-sm font-bold border-0">631</td>
+                            <td class="p-5 text-center text-sm font-black border-0 text-red-400 italic bg-white/5">1440 (n)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 03 Expected Table -->
+        <section class="card border-t-8 border-violet-400">
+            <div class="flex items-center gap-3 mb-8">
+                <span class="w-10 h-10 rounded-xl bg-violet-400 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-violet-200">03</span>
+                <h2 class="text-3xl font-extrabold tracking-tight">Expected Frequencies ($E$)</h2>
+            </div>
+            
+            <div class="bg-violet-50/50 rounded-[2rem] p-12 mb-10 text-center border border-violet-100 shadow-inner">
+                <p class="text-5xl math-font font-black text-violet-900 mb-4 italic">
+                    $$ E = \frac{\text{Row Total} \times \text{Col Total}}{n} $$
+                </p>
+                <p class="text-[11px] text-violet-400 uppercase font-black tracking-[0.3em]">Theoretical Values if Variables were Independent</p>
+            </div>
+
+            <div class="overflow-hidden rounded-2xl border border-slate-100 shadow-sm">
+                <table class="w-full border-collapse bg-white">
+                    <thead>
+                        <tr>
+                            <th class="table-header text-left">Category</th>
+                            <th class="table-header">E (AI: Yes)</th>
+                            <th class="table-header">E (AI: No)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="math-font text-xs">
+                        <tr><td class="row-label italic">Under 30</td><td class="table-cell">275.28</td><td class="table-cell">214.72</td></tr>
+                        <tr><td class="row-label italic">30 - 50</td><td class="table-cell">256.18</td><td class="table-cell">199.82</td></tr>
+                        <tr><td class="row-label border-b-0 italic">Over 50</td><td class="table-cell border-b-0">277.53</td><td class="table-cell border-b-0">216.47</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 04 Computation -->
+        <section class="card border-t-8 border-indigo-500">
+            <div class="flex items-center gap-3 mb-8">
+                <span class="w-10 h-10 rounded-xl bg-indigo-500 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-indigo-200">04</span>
+                <h2 class="text-3xl font-extrabold tracking-tight">Test Statistic Computation</h2>
+            </div>
+
+            <div class="bg-indigo-600 rounded-[2.5rem] p-12 text-white mb-10 shadow-xl relative overflow-hidden">
+                <div class="relative z-10 text-center">
+                    <p class="text-6xl math-font font-black mb-4">$$ \chi^2 = \sum \frac{(O - E)^2}{E} $$</p>
+                    <p class="text-indigo-200 text-xs font-bold uppercase tracking-[0.4em] opacity-80 italic">Aggregating Cell Discrepancies</p>
+                </div>
+                <div class="absolute -right-20 -bottom-20 w-64 h-64 bg-white/5 rounded-full blur-3xl"></div>
+            </div>
+
+            <div class="overflow-hidden rounded-2xl border border-slate-100 shadow-sm">
+                <table class="w-full border-collapse">
+                    <thead>
+                        <tr class="bg-slate-50">
+                            <th class="table-header text-left">Cell Category</th>
+                            <th class="table-header">Obs ($O$)</th>
+                            <th class="table-header">Exp ($E$)</th>
+                            <th class="table-header bg-indigo-50 text-indigo-600">Contribution</th>
+                        </tr>
+                    </thead>
+                    <tbody class="math-font text-xs">
+                        <tr><td class="row-label italic">Under 30, Yes</td><td class="table-cell">312</td><td class="table-cell">275.28</td><td class="table-cell font-bold text-indigo-600">4.90</td></tr>
+                        <tr><td class="row-label italic">Under 30, No</td><td class="table-cell">178</td><td class="table-cell">214.72</td><td class="table-cell font-bold text-indigo-600">6.28</td></tr>
+                        <tr><td class="row-label italic">30 - 50, Yes</td><td class="table-cell">273</td><td class="table-cell">256.18</td><td class="table-cell font-bold text-indigo-600">1.10</td></tr>
+                        <tr><td class="row-label italic">30 - 50, No</td><td class="table-cell">183</td><td class="table-cell">199.82</td><td class="table-cell font-bold text-indigo-600">1.41</td></tr>
+                        <tr><td class="row-label italic">Over 50, Yes</td><td class="table-cell">224</td><td class="table-cell">277.53</td><td class="table-cell font-bold text-indigo-600">10.33</td></tr>
+                        <tr><td class="row-label border-b-0 italic">Over 50, No</td><td class="table-cell border-b-0">270</td><td class="table-cell border-b-0">216.47</td><td class="table-cell font-bold text-indigo-600 border-b-0">13.24</td></tr>
+                    </tbody>
+                    <tfoot>
+                        <tr class="bg-indigo-500 text-white font-black text-3xl italic">
+                            <td colspan="3" class="p-8 text-right tracking-tighter">Total \(\chi^2\) Statistic</td>
+                            <td class="p-8 text-center bg-indigo-600 shadow-inner">37.26</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </section>
+
+        <!-- 05 Statistical Verdict -->
+        <section class="mb-32">
+            <h2 class="text-sm font-black uppercase text-slate-300 mb-12 tracking-[0.5em] text-center italic">The Statistical Verdict</h2>
+            <div class="grid md:grid-cols-2 gap-8 mb-12">
+                <div class="bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm text-center">
+                    <h3 class="text-[11px] font-bold uppercase text-slate-400 mb-4 tracking-widest">Degrees of Freedom</h3>
+                    <p class="text-5xl font-black italic">\( 2 \)</p>
+                    <p class="text-[10px] text-slate-300 mt-4 uppercase">$(3-1) \times (2-1)$</p>
+                </div>
+                <div class="bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm text-center">
+                    <h3 class="text-[11px] font-bold uppercase text-slate-400 mb-4 tracking-widest">Critical Value (\(\alpha = 0.05\))</h3>
+                    <p class="text-5xl font-black italic text-red-400">\( 5.99 \)</p>
+                    <p class="text-[10px] text-slate-300 mt-4 uppercase">Chi-Square Table Value</p>
+                </div>
+            </div>
+
+            <!-- Decision Box -->
+            <div class="bg-slate-900 rounded-[4rem] p-16 text-white shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] relative overflow-hidden text-center border-b-[12px] border-red-500">
+                <div class="relative z-10">
+                    <div class="flex justify-center items-center gap-12 mb-12">
+                        <div class="text-center">
+                            <span class="text-7xl font-black italic text-red-500">37.26</span>
+                            <span class="block text-[11px] uppercase font-bold opacity-30 mt-3 tracking-[0.2em]">Calculated Stat</span>
+                        </div>
+                        <div class="text-6xl font-thin opacity-10 italic">&gt;</div>
+                        <div class="text-center">
+                            <span class="text-7xl font-black italic text-slate-500">5.99</span>
+                            <span class="block text-[11px] uppercase font-bold opacity-30 mt-3 tracking-[0.2em]">Critical Threshold</span>
+                        </div>
+                    </div>
+
+                    <div class="inline-block bg-red-500 text-white px-12 py-5 rounded-full font-black uppercase text-base tracking-[0.3em] shadow-3xl shadow-red-500/50 mb-10 transform hover:scale-105 transition-transform duration-500 cursor-default">
+                        Reject Null Hypothesis
+                    </div>
+
+                    <p class="text-slate-400 text-base italic font-light max-w-xl mx-auto leading-loose">
+                        The evidence is overwhelming. We conclude that Age and AI Usage are <strong>not independent</strong>. A statistically significant association exists between these categories.
+                    </p>
+                </div>
+                <div class="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none select-none overflow-hidden">
+                    <p class="text-[300px] font-black absolute -top-20 -left-20">CHI</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Adventure Map -->
+        <section class="mb-32">
+            <h2 class="text-[10px] font-black uppercase text-slate-300 mb-8 tracking-[0.5em] text-center italic">Continue the Adventure</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <a href="chi2gof.html" class="group p-8 rounded-[2rem] bg-white border border-slate-200 hover:border-cyan-500 hover:shadow-2xl hover:shadow-cyan-100 transition-all duration-500">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 group-hover:text-cyan-500 transition-colors">Sister Test</span>
+                    <h4 class="text-xl font-bold mt-2 text-slate-800 italic">$\chi^2$ Goodness of Fit</h4>
+                </a>
+                <a href="chi_square.html" class="group p-8 rounded-[2rem] bg-white border border-slate-200 hover:border-blue-500 hover:shadow-2xl hover:shadow-blue-100 transition-all duration-500">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 group-hover:text-blue-500 transition-colors">Distribution</span>
+                    <h4 class="text-xl font-bold mt-2 text-slate-800 italic">Chi-Square Shape</h4>
+                </a>
+                <a href="degrees_of_freedom.html" class="group p-8 rounded-[2rem] bg-white border border-slate-200 hover:border-rose-500 hover:shadow-2xl hover:shadow-rose-100 transition-all duration-500">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 group-hover:text-rose-500 transition-colors">Constraints</span>
+                    <h4 class="text-xl font-bold mt-2 text-slate-800 italic">Degrees of Freedom</h4>
+                </a>
+            </div>
+        </section>
+
+        <!-- Footer Overlay -->
+        <footer class="text-center pb-32">
+            <a href="index.html" class="inline-block px-12 py-4 rounded-full bg-slate-100 text-slate-600 font-black uppercase tracking-widest text-xs hover:bg-slate-200 transition-colors shadow-sm mb-12">
+                Back to Adventure Home
+            </a>
+            <p class="mt-20 text-[10px] opacity-20 font-black uppercase tracking-[0.8em]">End of Chi-Square TOI Adventure - Andromechanic</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bayes' Theorem | Andromechanic's Stats Adventure</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="vguide.css">
+</head>
+<body class="p-4 md:p-16">
+    <div class="max-w-4xl mx-auto">
+        <header class="text-center mb-20">
+            <div class="badge bg-indigo-100 text-indigo-700 mb-6 uppercase tracking-[0.2em] font-bold">
+                Probability Theory
+            </div>
+            <h1 class="text-5xl md:text-6xl font-black italic tracking-tighter mb-6 title-gradient leading-tight">
+                Bayes' <br> Theorem
+            </h1>
+            <p class="text-xl text-slate-400 font-light tracking-wide italic">
+                The Geometry of Changing Beliefs based on <a href="conditional_probability.html" class="text-blue-500 underline underline-offset-4 decoration-1 font-bold italic">Conditional Probability</a>.
+            </p>
+        </header>
+
+                <!-- Core Concept Section -->
+        <section class="card border-t-8 border-blue-500">
+            <div class="flex items-center gap-3 mb-6">
+                <span class="w-10 h-10 rounded-xl bg-blue-500 flex items-center justify-center text-white font-bold text-sm">01</span>
+                <h2 class="text-3xl font-extrabold tracking-tight text-slate-800">Core Concept</h2>
+            </div>
+            <div class="bg-blue-50 border border-blue-100 rounded-2xl p-6">
+                <p class="text-lg text-slate-700 leading-relaxed italic">
+                    New evidence should not <strong>determine</strong> your beliefs; it should <strong>update</strong> your prior beliefs.
+                </p>
+            </div>
+        </section>
+
+        <!-- 1. The Steve Example -->
+        <section class="card border-t-8 border-blue-500">
+            <div class="flex items-center gap-3 mb-8">
+                <span class="w-10 h-10 rounded-xl bg-blue-500 flex items-center justify-center text-white font-bold text-sm">02</span>
+                <h2 class="text-3xl font-extrabold tracking-tight text-slate-800">The "Steve" Example</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-6 mt-4">
+                <div class="bg-white rounded-2xl p-6 shadow-md border-t-4 border-blue-400">
+                    <h3 class="font-bold text-blue-600 mb-2 uppercase text-xs tracking-widest">The Setup</h3>
+                    <p class="text-slate-700 italic text-sm">"Steve is shy and withdrawn, invariably helpful but with very little interest in people... a meek and tidy soul, he has a need for order and structure."</p>
+                    <p class="mt-4 font-bold text-slate-900">Question: Is Steve a Librarian or a Farmer?</p>
+                </div>
+                <div class="bg-white rounded-2xl p-6 shadow-md border-t-4 border-red-400">
+                    <h3 class="font-bold text-red-500 mb-2 uppercase text-xs tracking-widest">The Common Error</h3>
+                    <p class="text-slate-700 text-sm">Most people choose <strong>Librarian</strong> because the description fits a stereotype. This is irrational because it ignores the <strong>Base Rate</strong>.</p>
+                </div>
+            </div>
+
+            <div class="mt-6 bg-blue-50 rounded-2xl p-8 border border-blue-100">
+                <h3 class="font-bold text-blue-800 mb-4">Rational Thinking with the Missing Factor:</h3>
+                <div class="flex flex-col md:flex-row gap-6 items-center">
+                    <div class="flex-1">
+                        <ul class="space-y-3 text-slate-700">
+                            <li><span class="font-bold text-blue-600">The Base Rate:</span> There are roughly <strong>20 farmers</strong> for every 1 librarian.</li>
+                            <li><span class="font-bold text-blue-600">The Logic:</span> Even if a librarian is 4x more likely to be "tidy," the sheer volume of farmers means there are still more "tidy farmers" in total.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl shadow-inner text-center">
+                        <div class="text-xs text-slate-400 mb-2">Representative Sample</div>
+                        <div class="text-2xl font-black text-slate-800">200 Farmers : 10 Librarians</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Visualizing with Geometry -->
+        <section class="card border-t-8 border-emerald-500">
+            <div class="flex items-center gap-3 mb-8">
+                <span class="w-10 h-10 rounded-xl bg-emerald-500 flex items-center justify-center text-white font-bold text-sm">03</span>
+                <h2 class="text-3xl font-extrabold tracking-tight text-slate-800">Geometry of Probabilities</h2>
+            </div>
+            <p class="mb-6 text-slate-600 font-medium italic">Instead of memorizing numbers, imagine a 1x1 Square representing all possibilities.</p>
+            
+            <div class="bg-slate-900 rounded-3xl p-8 text-white">
+                <div class="flex flex-col md:flex-row items-center gap-10">
+                    <div class="w-56 h-56 border-2 border-white/20 relative bg-slate-800 flex-shrink-0 rounded-lg overflow-hidden shadow-2xl">
+                        <!-- Prior split -->
+                        <div class="absolute left-0 top-0 h-full w-[15%] bg-indigo-500/20 border-r border-white/20 flex items-center justify-center text-[10px] uppercase font-bold text-indigo-300">H (True)</div>
+                        <div class="absolute right-0 top-0 h-full w-[85%] flex items-center justify-center text-[10px] uppercase font-bold text-slate-500">Not H</div>
+                        <!-- Likelihood overlap -->
+                        <div class="absolute left-0 bottom-0 w-[15%] h-[60%] bg-indigo-400 border-t border-r border-white shadow-[0_0_15px_rgba(129,140,248,0.5)]"></div>
+                        <div class="absolute left-[15%] bottom-0 w-[85%] h-[15%] bg-pink-500/50 border-t border-white/30"></div>
+                    </div>
+                    <div class="space-y-6">
+                        <div class="flex gap-4">
+                            <div class="w-10 h-10 rounded-full bg-indigo-500 flex items-center justify-center font-bold">1</div>
+                            <p class="flex-1 text-slate-300 text-sm"><strong class="text-white">Prior \( P(H) \):</strong> Split the square vertically based on your initial belief (e.g., Librarian vs Farmer ratio).</p>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="w-10 h-10 rounded-full bg-indigo-400 flex items-center justify-center font-bold">2</div>
+                            <p class="flex-1 text-slate-300 text-sm"><strong class="text-white">Likelihood \( P(E|H) \):</strong> Shade a horizontal portion of the "True" side for those who fit the evidence.</p>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="w-10 h-10 rounded-full bg-pink-500/50 flex items-center justify-center font-bold">3</div>
+                            <p class="flex-1 text-slate-300 text-sm"><strong class="text-white">The Update:</strong> Once evidence \( E \) is seen, the unshaded space "disappears." Your new probability is the proportion of the <span class="text-indigo-400 font-bold underline">shaded Librarian area</span> over the <span class="font-bold underline text-white">total shaded area</span>.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. The Formula Breakdown -->
+        <section class="card border-t-8 border-amber-500">
+            <div class="flex items-center gap-3 mb-8">
+                <span class="w-10 h-10 rounded-xl bg-amber-500 flex items-center justify-center text-white font-bold text-sm">04</span>
+                <h2 class="text-3xl font-extrabold tracking-tight text-slate-800">The Formula Breakdown</h2>
+            </div>
+            
+            <div class="flex flex-col items-center mb-8">
+                <div class="text-3xl md:text-5xl font-bold math-font mb-6 text-slate-800 bg-slate-50 p-6 rounded-2xl border border-slate-200">
+                    \[ \color{#9333ea}{P(H|E)} = \frac{\color{#2563eb}{P(H)} \cdot \color{#16a34a}{P(E|H)}}{\color{#ca8a04}{P(E)}} \]
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 gap-4">
+                <div class="flex flex-col md:flex-row md:items-center gap-4 p-5 rounded-xl bg-purple-50 border-l-4 border-purple-400 shadow-sm">
+                    <span class="font-bold text-purple-700 text-lg min-w-[180px]">\( P(H|E) \) Posterior:</span>
+                    <p class="text-slate-600 flex-1">The probability the hypothesis is true <strong>given</strong> the evidence.</p>
+                </div>
+                <div class="flex flex-col md:flex-row md:items-center gap-4 p-5 rounded-xl bg-blue-50 border-l-4 border-blue-400 shadow-sm">
+                    <span class="font-bold text-blue-700 text-lg min-w-[180px]">\( P(H) \) Prior:</span>
+                    <p class="text-slate-600 flex-1">Your initial belief before seeing any evidence.</p>
+                </div>
+                <div class="flex flex-col md:flex-row md:items-center gap-4 p-5 rounded-xl bg-green-50 border-l-4 border-green-400 shadow-sm">
+                    <span class="font-bold text-green-700 text-lg min-w-[180px]">\( P(E|H) \) Likelihood:</span>
+                    <p class="text-slate-600 flex-1">Probability of seeing this evidence <strong>if</strong> the hypothesis were true.</p>
+                </div>
+                <div class="flex flex-col md:flex-row md:items-center gap-4 p-5 rounded-xl bg-yellow-50 border-l-4 border-yellow-400 shadow-sm">
+                    <span class="font-bold text-yellow-700 text-lg min-w-[180px]">\( P(E) \) Total Evidence:</span>
+                    <p class="text-slate-600 flex-1">Total probability of seeing evidence across <strong>all</strong> cases (both \( H \) and \( \neg H \)).</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Key Takeaways -->
+        <section class="card border-t-8 border-violet-500">
+            <div class="flex items-center gap-3 mb-8">
+                <span class="w-10 h-10 rounded-xl bg-violet-500 flex items-center justify-center text-white font-bold text-sm">05</span>
+                <h2 class="text-3xl font-extrabold tracking-tight text-slate-800">Takeaways for Intuition</h2>
+            </div>
+            
+            <div class="space-y-6">
+                <div class="bg-white rounded-2xl p-6 shadow-sm border-l-8 border-amber-400">
+                    <h3 class="text-lg font-bold text-amber-900 mb-2">Think in Counts, Not Percentages</h3>
+                    <p class="text-slate-700">Humans estimate better with "4 out of 100" than "4%." Phrasing problems as representative samples (e.g., 210 people) eliminates most logical fallacies.</p>
+                </div>
+
+                <div class="bg-rose-50 rounded-2xl p-6 border border-rose-100">
+                    <h3 class="text-lg font-bold text-rose-900 mb-2 italic">The "Linda" Problem (Conjunction Fallacy)</h3>
+                    <p class="text-rose-800 text-sm mb-4">85% of people incorrectly say it's more likely Linda is a "feminist bank teller" than just a "bank teller."</p>
+                    <div class="bg-white/50 p-4 rounded-lg text-rose-900 font-bold text-center">
+                        Error rate drops from 85% to 0% when you ask for counts (e.g., "How many out of 100?").
+                    </div>
+                </div>
+
+                <div class="bg-slate-100 rounded-2xl p-6 border border-slate-200">
+                    <h3 class="text-lg font-bold text-slate-800 mb-1">Irrelevant Evidence</h3>
+                    <p class="text-slate-600">If the likelihood \( P(E|H) \) is the same as \( P(E|\neg H) \), the evidence is useless and your belief shouldn't change at all.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Real World Applications -->
+        <section class="card border-t-8 border-rose-500">
+            <div class="flex items-center gap-3 mb-8">
+                <span class="w-10 h-10 rounded-xl bg-rose-500 flex items-center justify-center text-white font-bold text-sm">06</span>
+                <h2 class="text-3xl font-extrabold tracking-tight text-slate-800">Real-World Applications</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-white p-6 rounded-2xl shadow-sm text-center">
+                    <div class="text-3xl mb-2 font-black text-slate-700">HIST</div>
+                    <h4 class="font-bold text-slate-800">Science</h4>
+                    <p class="text-xs text-slate-500 mt-2">Updating models based on new data and experimental results.</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm text-center">
+                    <div class="text-3xl mb-2 font-black text-slate-700">HIST</div>
+                    <h4 class="font-bold text-slate-800">AI / ML</h4>
+                    <p class="text-xs text-slate-500 mt-2">Explicitly modeling a machine's belief to make decisions under uncertainty.</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm text-center">
+                    <div class="text-3xl mb-2 font-black text-slate-700">HIST</div>
+                    <h4 class="font-bold text-slate-800">Treasure Hunting</h4>
+                    <p class="text-xs text-slate-500 mt-2">Tommy Thompson used Bayesian search to find $700M in gold from a 150-year-old shipwreck.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Adventure Map -->
+        <section class="mb-32">
+            <h2 class="text-[10px] font-black uppercase text-slate-300 mb-8 tracking-[0.5em] text-center italic">Continue the Adventure</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <a href="conditional_probability.html" class="group p-8 rounded-[2rem] bg-white border border-slate-200 hover:border-indigo-500 hover:shadow-2xl hover:shadow-indigo-100 transition-all duration-500">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 group-hover:text-indigo-500 transition-colors">Prerequisite</span>
+                    <h4 class="text-xl font-bold mt-2 text-slate-800 italic">Conditional Prob</h4>
+                </a>
+                <a href="central_tendency.html" class="group p-8 rounded-[2rem] bg-white border border-slate-200 hover:border-blue-500 hover:shadow-2xl hover:shadow-blue-100 transition-all duration-500">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 group-hover:text-blue-500 transition-colors">Core Stats</span>
+                    <h4 class="text-xl font-bold mt-2 text-slate-800 italic">Central Tendency</h4>
+                </a>
+                <a href="spread.html" class="group p-8 rounded-[2rem] bg-white border border-slate-200 hover:border-emerald-500 hover:shadow-2xl hover:shadow-emerald-100 transition-all duration-500">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 group-hover:text-emerald-500 transition-colors">Advanced Path</span>
+                    <h4 class="text-xl font-bold mt-2 text-slate-800 italic">Measures of Spread</h4>
+                </a>
+            </div>
+        </section>
+
+        <!-- Footer Overlay -->
+        <footer class="text-center pb-32">
+            <a href="index.html" class="inline-block px-12 py-4 rounded-full bg-slate-100 text-slate-600 font-black uppercase tracking-widest text-xs hover:bg-slate-200 transition-colors shadow-sm">
+                Back to Adventure Home
+            </a>
+            <p class="mt-20 text-[10px] opacity-20 font-black uppercase tracking-[0.8em]">End of Bayes' Theorem Adventure - Andromechanic</p>
+        </footer>
+    </div>
+</body>
+</html>

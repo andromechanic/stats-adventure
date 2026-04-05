@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANOVA | Andromechanic's Stats Adventure</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="vguide.css">
+</head>
+<body class="p-4 md:p-16">
+    <div class="max-w-4xl mx-auto">
+        <!-- Main Header -->
+        <header class="text-center mb-24">
+            <div class="badge bg-indigo-100 text-indigo-700 mb-6 uppercase tracking-[0.2em] font-bold">
+                 Multi-Group Comparison
+            </div>
+            <h1 class="text-5xl md:text-6xl font-black italic tracking-tighter mb-6 title-gradient leading-tight">
+                ANOVA <br> (Analysis of Variance)
+            </h1>
+            <p class="text-xl text-slate-400 font-light tracking-wide italic max-w-2xl mx-auto leading-relaxed">
+                Measuring "Between" vs. "Within" to determine if three or more independent groups have truly different means.
+            </p>
+        </header>
+
+        <!-- 01 The Core Logic: Variation is Key -->
+        <section class="card border-t-8 border-indigo-500">
+            <div class="flex items-center gap-3 mb-8">
+                <span class="w-10 h-10 rounded-xl bg-indigo-500 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-indigo-200">01</span>
+                <h2 class="text-3xl font-extrabold tracking-tight text-slate-800">The Core Logic</h2>
+            </div>
+            <p class="text-sm text-slate-500 mb-8 leading-relaxed">
+                While a t-test compares the means of exactly two groups, ANOVA allows you to test multiple groups simultaneously without increasing the risk of a "Type I error" (False Positive). 
+                <strong>Crucially, ANOVA doesn't compare means directly—it compares variances.</strong>
+            </p>
+            
+            <div class="grid md:grid-cols-2 gap-8 mb-12">
+                <div class="p-8 bg-indigo-900 rounded-[2.5rem] shadow-xl text-white relative overflow-hidden">
+                    <h4 class="text-xs font-black uppercase text-indigo-300 mb-4 tracking-widest">Between-Group</h4>
+                    <p class="text-2xl italic font-black mb-2">The Signal</p>
+                    <p class="text-xs text-indigo-400 opacity-60 italic">How much do the means of the different groups differ from each other?</p>
+                </div>
+                <div class="p-8 bg-slate-50 border border-slate-200 rounded-[2.5rem] shadow-inner text-slate-400">
+                    <h4 class="text-xs font-black uppercase text-slate-300 mb-4 tracking-widest">Within-Group</h4>
+                    <p class="text-2xl italic font-black mb-2 text-slate-600">The Noise</p>
+                    <p class="text-xs text-slate-300 italic opacity-60">How much do individual scores inside each group differ from that group's mean?</p>
+                </div>
+            </div>
+
+            <!-- F-Ratio Card -->
+            <div class="p-10 bg-slate-900 rounded-3xl text-white text-center shadow-2xl relative overflow-hidden">
+                <h4 class="text-[10px] font-black uppercase text-rose-400 mb-6 tracking-widest">The F-Ratio Engine</h4>
+                <p class="text-4xl md:text-5xl font-black italic tracking-tighter mb-4">
+                    \[ F = \frac{\text{Variance Between Groups}}{\text{Variance Within Groups}} \]
+                </p>
+                <p class="text-xs text-slate-400 italic">High F = Differences are likely REAL. Low F = Differences are just NOISE.</p>
+                <div class="absolute -right-10 -bottom-10 opacity-5 pointer-events-none">
+                    <p class="text-[120px] font-black italic uppercase tracking-tighter">SIGMA</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 02 Interactive Prop: 3-Group Comparison -->
+        <section class="card border-t-8 border-rose-500">
+            <div class="flex items-center gap-3 mb-8">
+                <span class="w-10 h-10 rounded-xl bg-rose-500 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-rose-200">02</span>
+                <h2 class="text-3xl font-extrabold tracking-tight text-slate-800 italic">Interactive: Signal vs Noise</h2>
+            </div>
+            
+            <div class="bg-slate-950 rounded-[2.5rem] p-12 mb-10 shadow-2xl relative overflow-hidden h-[400px]">
+                <div class="flex justify-center items-center h-48 gap-8 md:gap-24 mb-16 relative">
+                    <!-- Ground truth mean -->
+                    <div class="absolute w-full h-px border-t border-white/5 top-1/2 -z-10"></div>
+                    
+                    <!-- Group A -->
+                    <div id="g1" class="w-1 bg-rose-500 rounded-full flex items-center transition-all duration-300 relative">
+                        <div class="absolute -top-10 left-1/2 -translate-x-1/2 text-[9px] font-black text-rose-500 uppercase tracking-widest">Brand A</div>
+                    </div>
+                    <!-- Group B -->
+                    <div id="g2" class="w-1 bg-emerald-500 rounded-full transition-all duration-300 relative">
+                        <div class="absolute -top-10 left-1/2 -translate-x-1/2 text-[9px] font-black text-emerald-500 uppercase tracking-widest">Brand B</div>
+                    </div>
+                    <!-- Group C -->
+                    <div id="g3" class="w-1 bg-blue-500 rounded-full transition-all duration-300 relative">
+                        <div class="absolute -top-10 left-1/2 -translate-x-1/2 text-[9px] font-black text-blue-500 uppercase tracking-widest">Brand C</div>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-10">
+                    <div class="space-y-4">
+                        <label class="flex justify-between text-[10px] font-black text-rose-400 uppercase tracking-widest">Signal (Between-Group Distance)</label>
+                        <input type="range" id="distSlider" min="0" max="250" value="50" class="w-full accent-rose-500">
+                    </div>
+                    <div class="space-y-4">
+                        <label class="flex justify-between text-[10px] font-black text-slate-400 uppercase tracking-widest">Noise (Within-Group Spread)</label>
+                        <input type="range" id="spreadSlider" min="10" max="100" value="40" class="w-full accent-slate-600">
+                    </div>
+                </div>
+            </div>
+            <p class="text-[10px] text-center text-slate-400 uppercase tracking-widest leading-loose">
+                "See how pushing the Signal up makes the groups look separate, while increasing Noise makes everything look like one big cloud?"
+            </p>
+        </section>
+
+        <!-- 03 Types & Assumptions -->
+        <section class="mb-32 grid md:grid-cols-2 gap-8">
+            <!-- Types -->
+            <div class="p-10 bg-indigo-50 rounded-[3rem] border border-indigo-100 h-full">
+                <h3 class="text-xl font-black italic mb-8 text-indigo-900 border-b border-indigo-200 pb-2 uppercase tracking-tighter">Variations of ANOVA</h3>
+                <ul class="space-y-6">
+                    <li class="flex gap-4">
+                        <span class="text-indigo-400 font-black italic text-xl">1.</span>
+                        <p class="text-xs text-slate-600 leading-relaxed font-medium"><strong>One-Way:</strong> One independent variable. (e.g. Fertilizer Brand vs. Height)</p>
+                    </li>
+                    <li class="flex gap-4">
+                        <span class="text-indigo-400 font-black italic text-xl">2.</span>
+                        <p class="text-xs text-slate-600 leading-relaxed font-medium"><strong>Two-Way:</strong> Two independent variables. (e.g. Fertilizer Brand AND Sunlight vs. Height)</p>
+                    </li>
+                    <li class="flex gap-4">
+                        <span class="text-indigo-400 font-black italic text-xl">3.</span>
+                        <p class="text-xs text-slate-600 leading-relaxed font-medium"><strong>MANOVA:</strong> Multiple dependent variables at once.</p>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Assumptions -->
+            <div class="p-10 bg-slate-900 rounded-[3rem] border border-slate-800 h-full text-white">
+                <h3 class="text-xl font-black italic mb-8 text-rose-500 border-b border-white/5 pb-2 uppercase tracking-tighter">The Assumptions</h3>
+                <ul class="space-y-6">
+                    <li class="flex gap-4">
+                        <span class="w-6 h-6 rounded-lg bg-emerald-500 text-white flex items-center justify-center font-black text-[10px]">✓</span>
+                        <p class="text-[11px] text-slate-400 font-light italic"><strong>Normality:</strong> Each group data must follow a bell curve.</p>
+                    </li>
+                    <li class="flex gap-4">
+                        <span class="w-6 h-6 rounded-lg bg-emerald-500 text-white flex items-center justify-center font-black text-[10px]">✓</span>
+                        <p class="text-[11px] text-slate-400 font-light italic"><strong>Homogeneity:</strong> Variance (spread) should be roughly equal across groups.</p>
+                    </li>
+                    <li class="flex gap-4">
+                        <span class="w-6 h-6 rounded-lg bg-emerald-500 text-white flex items-center justify-center font-black text-[10px]">✓</span>
+                        <p class="text-[11px] text-slate-400 font-light italic"><strong>Independence:</strong> One plant's growth doesn't affect another's.</p>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 04 The Gardener's Adventure (Omnibus Warning) -->
+        <section class="card border-t-8 border-amber-500">
+            <div class="flex items-center gap-3 mb-8">
+                <span class="w-10 h-10 rounded-xl bg-amber-500 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-amber-200">04</span>
+                <h2 class="text-3xl font-extrabold tracking-tight text-slate-800 italic">The Gardener's Example</h2>
+            </div>
+            <p class="text-sm text-slate-500 mb-10 leading-relaxed italic">
+                A gardener measures 15 tomato plants across 3 Fertilizer Brands (A, B, C). ANOVA calculates that Brand C is significantly taller than A and B.
+            </p>
+            <div class="p-8 bg-amber-50 rounded-3xl border border-amber-100 flex flex-col md:flex-row items-center gap-10 mb-10">
+                <div class="text-center">
+                    <p class="text-[10px] font-black uppercase text-amber-500 tracking-widest mb-2">Calculated P-Value</p>
+                    <p class="text-5xl font-black italic text-slate-900">0.01</p>
+                </div>
+                <div class="flex-1">
+                    <p class="text-sm font-bold text-slate-700 italic border-l-4 border-amber-500 pl-6">
+                        Conclusion: Since \(0.01 < 0.05\), we <strong>Reject the Null (\(H_0\))</strong>. The fertilizers are NOT all the same.
+                    </p>
+                </div>
+            </div>
+
+            <div class="p-10 bg-indigo-900 rounded-[2.5rem] text-white relative overflow-hidden">
+                <h4 class="text-xs font-black uppercase text-violet-400 mb-6 tracking-widest underline decoration-violet-400 decoration-4 underline-offset-8">The "Omnibus" Test Warning</h4>
+                <p class="text-sm font-light italic leading-relaxed opacity-70 mb-6">
+                    ANOVA tells you <em>that</em> there is a difference, but it doesn't tell you <em>where</em> it is. Our test proves Brands are different overall, but doesn't explicitly prove Brand C is the best.
+                </p>
+                <div class="flex items-center gap-4">
+                    <div class="px-4 py-2 bg-white/10 rounded-lg text-[10px] font-black text-white">Next Step: POST-HOC TEST (e.g. Tukey Test)</div>
+                </div>
+                <div class="absolute -right-10 -bottom-10 opacity-5 pointer-events-none">
+                    <p class="text-[120px] font-black italic uppercase tracking-tighter">WHERE?</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer Overlay -->
+        <footer class="text-center pb-32">
+            <a href="index.html" class="inline-block px-12 py-4 rounded-full bg-slate-900 text-white font-black uppercase tracking-widest text-xs hover:bg-slate-800 transition-colors shadow-sm mb-12">
+                Back to Adventure Home
+            </a>
+            
+            <div class="grid grid-cols-2 gap-4 max-w-sm mx-auto">
+                <a href="f_dist.html" class="p-6 rounded-2xl bg-white border border-slate-100 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-amber-500 shadow-sm transition-all hover:-translate-y-1">The F-Dist Engine</a>
+                <a href="hypothesis_testing.html" class="p-6 rounded-2xl bg-white border border-slate-100 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-indigo-500 shadow-sm transition-all hover:-translate-y-1">Core Logic</a>
+            </div>
+            
+            <p class="mt-20 text-[10px] opacity-20 font-black uppercase tracking-[0.8em]">End of ANOVA Adventure - Andromechanic</p>
+        </footer>
+    </div>
+
+    <!-- Script -->
+    <script>
+        const distSlider = document.getElementById('distSlider');
+        const spreadSlider = document.getElementById('spreadSlider');
+        const g1 = document.getElementById('g1');
+        const g2 = document.getElementById('g2');
+        const g3 = document.getElementById('g3');
+
+        function update() {
+            const distance = parseInt(distSlider.value);
+            const spread = parseInt(spreadSlider.value);
+            
+            // Adjust spread (noise)
+            g1.style.height = `${spread * 2.5}px`;
+            g2.style.height = `${spread * 2.5}px`;
+            g3.style.height = `${spread * 2.5}px`;
+
+            // Adjust distance (signal)
+            // Center group stays at 0
+            // Group A moves left, Group C moves right
+            g1.style.transform = `translateX(-${distance/1.5}px)`;
+            g2.style.transform = `translateX(0px)`;
+            g3.style.transform = `translateX(${distance/1.5}px)`;
+        }
+
+        distSlider.addEventListener('input', update);
+        spreadSlider.addEventListener('input', update);
+        update();
+    </script>
+</body>
+</html>

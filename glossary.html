@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Stats Lexicon | Andromechanic's Stats Adventure</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="vguide.css">
+    <style>
+        .lexicon-card { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .lexicon-card:hover { transform: translateY(-8px) scale(1.02); }
+    </style>
+</head>
+<body class="p-4 md:p-16">
+    <div class="max-w-6xl mx-auto">
+        <!-- Main Header -->
+        <header class="text-center mb-24">
+            <div class="badge bg-slate-100 text-slate-500 mb-6 uppercase tracking-[0.3em] font-bold">
+                The Master Decoder
+            </div>
+            <h1 class="text-6xl md:text-8xl font-black italic tracking-tighter mb-8 title-gradient leading-tight">
+                The Stats <br> Lexicon
+            </h1>
+            <p class="text-xl text-slate-400 font-light tracking-wide italic max-w-2xl mx-auto leading-relaxed">
+                Click any term to dive deep into its adventure. Chaos defined, one brick at a time.
+            </p>
+        </header>
+
+        <!-- The Dictionary Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-32">
+            <!-- Group: Central Measures -->
+            <a href="central_tendency.html" class="lexicon-card p-8 rounded-[2.5rem] bg-blue-50 border border-blue-100 flex flex-col justify-between h-64">
+                <div>
+                    <h3 class="text-2xl font-black italic text-blue-800">Mean (\(\mu\))</h3>
+                    <p class="text-xs text-blue-400 mt-2 italic leading-relaxed">The balance point. Sum of all values divided by count.</p>
+                </div>
+                <span class="text-[10px] font-black uppercase text-blue-300 tracking-widest">Foundations</span>
+            </a>
+
+            <a href="spread.html" class="lexicon-card p-8 rounded-[2.5rem] bg-emerald-50 border border-emerald-100 flex flex-col justify-between h-64">
+                <div>
+                    <h3 class="text-2xl font-black italic text-emerald-800">Sigma (\(\sigma\))</h3>
+                    <p class="text-xs text-emerald-400 mt-2 italic leading-relaxed">Standard Deviation. The average distance of data points from the center.</p>
+                </div>
+                <span class="text-[10px] font-black uppercase text-emerald-300 tracking-widest">Spread</span>
+            </a>
+
+            <!-- Group: Inference Logic -->
+            <a href="p_values.html" class="lexicon-card p-8 rounded-[2.5rem] bg-rose-50 border border-rose-100 flex flex-col justify-between h-64">
+                <div>
+                    <h3 class="text-2xl font-black italic text-rose-800">P-Value</h3>
+                    <p class="text-xs text-rose-400 mt-2 italic leading-relaxed">The "Surprise" scale. Chance of seeing your result if the null is true.</p>
+                </div>
+                <span class="text-[10px] font-black uppercase text-rose-300 tracking-widest">Inference</span>
+            </a>
+
+            <a href="hypothesis_testing.html" class="lexicon-card p-8 rounded-[2.5rem] bg-slate-900 border border-slate-700 text-white flex flex-col justify-between h-64">
+                <div>
+                    <h3 class="text-2xl font-black italic text-white">Null ($H_0$)</h3>
+                    <p class="text-xs text-slate-400 mt-2 italic leading-relaxed">The assumption of "nothing going on." The starting line of proof.</p>
+                </div>
+                <span class="text-[10px] font-black uppercase text-slate-500 tracking-widest">Strategy</span>
+            </a>
+
+            <a href="statistical_errors.html" class="lexicon-card p-8 rounded-[2.5rem] bg-amber-50 border border-amber-100 flex flex-col justify-between h-64">
+                <div>
+                    <h3 class="text-2xl font-black italic text-amber-800">Alpha (\(\alpha\))</h3>
+                    <p class="text-xs text-amber-400 mt-2 italic leading-relaxed">Significance level. Your tolerance for false alarms (Type I errors).</p>
+                </div>
+                <span class="text-[10px] font-black uppercase text-amber-300 tracking-widest">Risk</span>
+            </a>
+
+            <a href="confidence_intervals.html" class="lexicon-card p-8 rounded-[2.5rem] bg-indigo-50 border border-indigo-100 flex flex-col justify-between h-64">
+                <div>
+                    <h3 class="text-2xl font-black italic text-indigo-800">Confidence</h3>
+                    <p class="text-xs text-indigo-400 mt-2 italic leading-relaxed">How sure we are that the true population mean falls in our range.</p>
+                </div>
+                <span class="text-[10px] font-black uppercase text-indigo-300 tracking-widest">Precision</span>
+            </a>
+
+            <a href="degrees_of_freedom.html" class="lexicon-card p-8 rounded-[2.5rem] bg-violet-50 border border-violet-100 flex flex-col justify-between h-64">
+                <div>
+                    <h3 class="text-2xl font-black italic text-violet-800">D.O.F</h3>
+                    <p class="text-xs text-violet-400 mt-2 italic leading-relaxed">Degrees of Freedom. The number of values free to vary in a calculation.</p>
+                </div>
+                <span class="text-[10px] font-black uppercase text-violet-300 tracking-widest">Constraints</span>
+            </a>
+
+            <a href="linear_regression.html" class="lexicon-card p-8 rounded-[2.5rem] bg-orange-50 border border-orange-100 flex flex-col justify-between h-64">
+                <div>
+                    <h3 class="text-2xl font-black italic text-orange-800">Residual</h3>
+                    <p class="text-xs text-orange-400 mt-2 italic leading-relaxed">The vertical distance between a data point and the regression line.</p>
+                </div>
+                <span class="text-[10px] font-black uppercase text-orange-300 tracking-widest">Modeling</span>
+            </a>
+
+            <a href="clt.html" class="lexicon-card p-8 rounded-[2.5rem] bg-emerald-900 border border-emerald-700 text-white flex flex-col justify-between h-64">
+                <div>
+                    <h3 class="text-2xl font-black italic text-white">CLT</h3>
+                    <p class="text-xs text-emerald-400 mt-2 italic leading-relaxed">Central Limit Theorem. The law that turns chaos into a Bell Curve.</p>
+                </div>
+                <span class="text-[10px] font-black uppercase text-emerald-500 tracking-widest">The Master Law</span>
+            </a>
+
+            <a href="sampling_bias.html" class="lexicon-card p-8 rounded-[2.5rem] bg-rose-900 border border-rose-700 text-white flex flex-col justify-between h-64">
+                <div>
+                    <h3 class="text-2xl font-black italic text-white">Selection Bias</h3>
+                    <p class="text-xs text-rose-400 mt-2 italic leading-relaxed">When the sample doesn't represent the population correctly.</p>
+                </div>
+                <span class="text-[10px] font-black uppercase text-rose-500 tracking-widest">Data Quality</span>
+            </a>
+
+            <a href="normal.html" class="lexicon-card p-8 rounded-[2.5rem] bg-blue-900 border border-blue-700 text-white flex flex-col justify-between h-64">
+                <div>
+                    <h3 class="text-2xl font-black italic text-white">Gaussian</h3>
+                    <p class="text-xs text-blue-400 mt-2 italic leading-relaxed">Another name for the Normal (Bell Curve) Distribution.</p>
+                </div>
+                <span class="text-[10px] font-black uppercase text-blue-500 tracking-widest">Distributions</span>
+            </a>
+
+            <a href="anova.html" class="lexicon-card p-8 rounded-[2.5rem] bg-indigo-900 border border-indigo-700 text-white flex flex-col justify-between h-64">
+                <div>
+                    <h3 class="text-2xl font-black italic text-white">F-Ratio</h3>
+                    <p class="text-xs text-indigo-400 mt-2 italic leading-relaxed">Signal vs Noise. Used in ANOVA to compare multiple means.</p>
+                </div>
+                <span class="text-[10px] font-black uppercase text-indigo-500 tracking-widest">Comparison</span>
+            </a>
+        </div>
+
+        <!-- Footer -->
+        <footer class="text-center pb-32">
+            <a href="index.html" class="inline-block px-12 py-4 rounded-full bg-slate-900 text-white font-black uppercase tracking-widest text-xs hover:bg-slate-800 transition-colors shadow-sm mb-12">
+                Back to Adventure Home
+            </a>
+            <p class="mt-2 text-[10px] opacity-20 font-black uppercase tracking-[0.8em]">Andromechanic's Stats Lexicon - 2026</p>
+        </footer>
+    </div>
+</body>
+</html>

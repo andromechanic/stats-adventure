@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P-Values | Andromechanic's Stats Adventure</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="vguide.css">
+</head>
+<body class="p-4 md:p-16">
+    <div class="max-w-4xl mx-auto">
+        <!-- Main Header -->
+        <header class="text-center mb-24">
+            <div class="badge bg-indigo-100 text-indigo-700 mb-6 uppercase tracking-[0.2em] font-bold">
+                Inferential Evidence
+            </div>
+            <h1 class="text-5xl md:text-6xl font-black italic tracking-tighter mb-6 title-gradient leading-tight">
+                What is a <br> P-Value?
+            </h1>
+            <p class="text-xl text-slate-400 font-light tracking-wide italic">
+                Quantifying the "Surprise" Factor of Your Data
+            </p>
+        </header>
+
+        <!-- 01 The Conceptual Hook -->
+        <section class="card border-t-8 border-indigo-500">
+            <div class="flex items-center gap-3 mb-8">
+                <span class="w-10 h-10 rounded-xl bg-indigo-500 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-indigo-200">01</span>
+                <h2 class="text-3xl font-extrabold tracking-tight">The Evidence Meter</h2>
+            </div>
+            <p class="text-lg text-slate-600 leading-relaxed mb-6 italic">
+                "If the Null Hypothesis (\(H_0\)) were true, how likely is it that we would see a result this extreme?"
+            </p>
+            <p class="text-sm text-slate-500 mb-8 leading-relaxed">
+                A p-value is <strong>not</strong> the probability that the hypothesis is true. It is a measure of <strong>compatibility</strong> between your data and the Null Hypothesis. A low p-value means your data is very "surprising" if the world were truly random.
+            </p>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="p-8 bg-slate-900 rounded-3xl text-white shadow-xl relative overflow-hidden">
+                    <h4 class="text-xs font-black uppercase text-indigo-400 mb-4 tracking-widest">Low P-Value</h4>
+                    <p class="text-xl italic font-bold">"Wait, that's weird!"</p>
+                    <p class="text-xs text-slate-400 mt-2">Strong evidence to <strong>Reject</strong> the Null.</p>
+                </div>
+                <div class="p-8 bg-slate-50 border border-slate-200 rounded-3xl">
+                    <h4 class="text-xs font-black uppercase text-slate-400 mb-4 tracking-widest">High P-Value</h4>
+                    <p class="text-xl italic font-bold text-slate-600">"Nothing to see here."</p>
+                    <p class="text-xs text-slate-400 mt-2">Data is perfectly normal under the Null.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 02 Interactive Prop: The Evidence Slider -->
+        <section class="card border-t-8 border-rose-500">
+            <div class="flex items-center gap-3 mb-8">
+                <span class="w-10 h-10 rounded-xl bg-rose-500 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-rose-200">02</span>
+                <h2 class="text-3xl font-extrabold tracking-tight text-slate-800">Interactive: The Significance Threshold</h2>
+            </div>
+            
+            <div class="bg-slate-900 rounded-[2.5rem] p-12 mb-10 shadow-2xl relative overflow-hidden text-center">
+                <!-- Gauge / Meter -->
+                <div class="relative w-full h-4 bg-slate-800 rounded-full mb-16 overflow-hidden">
+                    <div id="pBar" class="absolute h-full bg-indigo-500 transition-all duration-500" style="width: 5%"></div>
+                    <div id="alphaLine" class="absolute h-full w-1 bg-rose-500 z-10" style="left: 5%"></div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-12 text-white">
+                    <div class="space-y-4">
+                        <label class="flex justify-between text-xs font-black text-indigo-400 uppercase tracking-widest">
+                            p-value <span id="pText">0.05</span>
+                        </label>
+                        <input type="range" id="pSlider" min="0" max="1000" value="50" class="w-full accent-indigo-500">
+                    </div>
+                    <div class="space-y-4">
+                        <label class="flex justify-between text-xs font-black text-rose-400 uppercase tracking-widest">
+                            \(\alpha\) (Significance) <span id="aText">0.05</span>
+                        </label>
+                        <input type="range" id="aSlider" min="1" max="250" value="50" class="w-full accent-rose-500">
+                    </div>
+                </div>
+
+                <!-- Live Verdict -->
+                <div id="verdictBox" class="mt-12 p-8 rounded-3xl border-2 border-dashed border-emerald-500/50 bg-emerald-500/10 text-emerald-400 font-black italic text-xl tracking-tighter">
+                    Significant Result! Reject \(H_0\)
+                </div>
+            </div>
+            <p class="text-xs text-center text-slate-400 italic">"Slide the p-value back and forth across the red \(\alpha\) line. When p is smaller than \(\alpha\), we claim a discovery."</p>
+        </section>
+
+        <!-- 03 The Two Worlds -->
+        <section class="card border-t-8 border-violet-500">
+            <div class="flex items-center gap-3 mb-8">
+                <span class="w-10 h-10 rounded-xl bg-violet-500 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-violet-200">03</span>
+                <h2 class="text-3xl font-extrabold tracking-tight text-slate-800">The Conflict</h2>
+            </div>
+            
+            <div class="space-y-8">
+                <div class="p-8 bg-slate-50 rounded-3xl border border-slate-200 flex gap-8 items-center">
+                    <div class="w-24 text-center">
+                        <span class="text-4xl font-black italic text-slate-300">H₀</span>
+                    </div>
+                    <div class="flex-1">
+                        <h4 class="text-sm font-black uppercase text-slate-400 mb-2">Null Hypothesis</h4>
+                        <p class="text-slate-600 text-sm">"The medicine does <strong>nothing</strong>. The difference you see is just luck."</p>
+                    </div>
+                </div>
+                <div class="p-8 bg-violet-50 rounded-3xl border border-violet-100 flex gap-8 items-center">
+                    <div class="w-24 text-center">
+                        <span class="text-4xl font-black italic text-violet-500">Hₐ</span>
+                    </div>
+                    <div class="flex-1">
+                        <h4 class="text-sm font-black uppercase text-violet-400 mb-2">Alternative Hypothesis</h4>
+                        <p class="text-slate-600 text-sm italic">"The medicine <strong>works</strong>. The difference is too big to be a coincidence."</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 04 The Verdict -->
+        <section class="mb-32">
+            <h2 class="text-sm font-black uppercase text-slate-300 mb-12 tracking-[0.5em] text-center italic">04. The Statistical Verdict</h2>
+            <div class="bg-slate-900 rounded-[4rem] p-16 text-white shadow-3xl text-center border-b-[12px] border-indigo-500 relative overflow-hidden">
+                <div class="relative z-10">
+                    <div class="grid md:grid-cols-2 gap-12">
+                        <div class="text-right">
+                            <span class="block text-emerald-400 font-black text-3xl italic mb-4 tracking-tighter">\( p < 0.05 \)</span>
+                            <p class="text-slate-400 text-xs italic font-light leading-relaxed">
+                                "Statistically Significant. We have enough evidence to say something interesting is happening."
+                            </p>
+                        </div>
+                        <div class="text-left border-l border-white/10 pl-12">
+                            <span class="block text-rose-400 font-black text-3xl italic mb-4 tracking-tighter">\( p \ge 0.05 \)</span>
+                            <p class="text-slate-400 text-xs italic font-light leading-relaxed">
+                                "Not Statistically Significant. We fail to reject the status quo. More data might be needed."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none select-none overflow-hidden">
+                    <p class="text-[300px] font-black absolute -top-20 -left-20">RESULT</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Adventure Map -->
+        <footer class="text-center pb-32">
+            <a href="index.html" class="inline-block px-12 py-4 rounded-full bg-slate-900 text-white font-black uppercase tracking-widest text-xs hover:bg-slate-800 transition-colors shadow-sm mb-12">
+                Back to Adventure Home
+            </a>
+            <div class="grid grid-cols-2 gap-4 max-w-sm mx-auto">
+                <a href="test_statistics.html" class="p-4 rounded-xl bg-white border border-slate-100 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-indigo-500">Test Stats Prereq</a>
+                <a href="anova.html" class="p-4 rounded-xl bg-white border border-slate-100 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-indigo-500">Explore ANOVA</a>
+            </div>
+            <p class="mt-20 text-[10px] opacity-20 font-black uppercase tracking-[0.8em]">End of P-Value Adventure - Andromechanic</p>
+        </footer>
+    </div>
+
+    <!-- Script -->
+    <script>
+        const pSlider = document.getElementById('pSlider');
+        const aSlider = document.getElementById('aSlider');
+        const pText = document.getElementById('pText');
+        const aText = document.getElementById('aText');
+        const pBar = document.getElementById('pBar');
+        const alphaLine = document.getElementById('alphaLine');
+        const verdictBox = document.getElementById('verdictBox');
+
+        function update() {
+            const p = parseInt(pSlider.value) / 1000;
+            const alpha = parseInt(aSlider.value) / 1000;
+            
+            pText.innerText = p.toFixed(3);
+            aText.innerText = alpha.toFixed(3);
+            
+            pBar.style.width = `${p * 100}%`;
+            alphaLine.style.left = `${alpha * 100}%`;
+            
+            if (p < alpha) {
+                verdictBox.innerText = "Significant Result! Reject H₀";
+                verdictBox.className = "mt-12 p-8 rounded-3xl border-2 border-dashed border-emerald-500/50 bg-emerald-500/10 text-emerald-400 font-black italic text-xl tracking-tighter transition-all duration-300";
+            } else {
+                verdictBox.innerText = "Non-Significant. Fail to Reject H₀";
+                verdictBox.className = "mt-12 p-8 rounded-3xl border-2 border-dashed border-rose-500/50 bg-rose-500/10 text-rose-400 font-black italic text-xl tracking-tighter transition-all duration-300";
+            }
+        }
+
+        pSlider.addEventListener('input', update);
+        aSlider.addEventListener('input', update);
+        update();
+    </script>
+</body>
+</html>

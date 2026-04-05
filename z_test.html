@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Z-Test | Andromechanic's Stats Adventure</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="vguide.css">
+</head>
+<body class="p-4 md:p-16">
+    <div class="max-w-4xl mx-auto">
+        <!-- Main Header -->
+        <header class="text-center mb-24">
+            <div class="badge bg-blue-100 text-blue-700 mb-6 uppercase tracking-[0.2em] font-bold">
+                Hypothesis Foundation
+            </div>
+            <h1 class="text-5xl md:text-6xl font-black italic tracking-tighter mb-6 title-gradient leading-tight">
+                The Z-Test
+            </h1>
+            <p class="text-xl text-slate-400 font-light tracking-wide italic">
+                Measuring the Distance of Means in Standard Units
+            </p>
+        </header>
+
+        <!-- 01 The Hook -->
+        <section class="card border-t-8 border-blue-500">
+            <div class="flex items-center gap-3 mb-8">
+                <span class="w-10 h-10 rounded-xl bg-blue-500 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-blue-200">01</span>
+                <h2 class="text-3xl font-extrabold tracking-tight text-slate-800">The Hook</h2>
+            </div>
+            <p class="text-lg text-slate-600 leading-relaxed mb-6 italic">"How many standard deviations away is my result from the population average?"</p>
+            <p class="text-sm text-slate-500 leading-relaxed mb-8">
+                The Z-Test is our primary way of comparing the mean of a sample to a known population mean (\(\mu\)). It assumes you have a large sample size (\(n > 30\)) and that your data follows the <a href="normal.html" class="text-blue-500 underline underline-offset-4 decoration-1 font-bold italic text-xs">Normal Distribution</a>.
+            </p>
+            <div class="p-12 bg-slate-900 rounded-[2.5rem] text-white text-center shadow-xl mb-12 relative overflow-hidden font-black">
+                <p class="text-4xl md:text-6xl math-font italic">\( Z = \frac{\bar{x} - \mu}{\sigma/\sqrt{n}} \)</p>
+                <div class="absolute -right-10 -bottom-10 opacity-5 pointer-events-none">
+                    <p class="text-[120px] font-black italic uppercase tracking-tighter">SIGMA</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 02 Interactive Prop -->
+        <section class="card border-t-8 border-blue-600">
+            <div class="flex items-center gap-3 mb-8">
+                <span class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-blue-200">02</span>
+                <h2 class="text-3xl font-extrabold tracking-tight text-slate-800">Interactive: Measuring Distance</h2>
+            </div>
+            
+            <div class="bg-blue-50 border border-blue-100 rounded-[2.5rem] p-10 mb-10 shadow-2xl relative overflow-hidden">
+                <div class="h-64 mb-10 border-b border-blue-200 relative">
+                    <!-- Standard Normal Curve in background -->
+                    <svg viewBox="0 0 1000 300" class="w-full h-full opacity-10 absolute pointer-events-none">
+                        <path d="M0 280 Q500 -20 1000 280" fill="transparent" stroke="#2563eb" stroke-width="4"/>
+                    </svg>
+                    
+                    <!-- Null Mean Marker -->
+                    <div class="absolute left-1/2 bottom-0 w-0.5 h-10 bg-slate-400 -translate-x-1/2"></div>
+                    <p class="absolute left-1/2 -bottom-6 -translate-x-1/2 text-[10px] font-black text-slate-400 uppercase tracking-widest">\(\mu\) (Null)</p>
+                    
+                    <!-- Sample Mean Marker (Draggable/Slider Controlled) -->
+                    <div id="xMarker" class="absolute left-1/2 bottom-0 w-1 h-32 bg-rose-500 -translate-x-1/2 transition-all duration-300"></div>
+                    <p id="xLabel" class="absolute left-1/2 -bottom-10 -translate-x-1/2 text-[10px] font-black text-rose-500 uppercase tracking-widest">\(\bar{x}\) (Observed)</p>
+                </div>
+
+                <div class="space-y-4 max-w-sm mx-auto mt-10">
+                    <label class="flex justify-between text-xs font-black text-blue-600 uppercase tracking-widest">
+                        Z-Value (Sigma Units) <span id="zVal">0.0</span>
+                    </label>
+                    <input type="range" id="zSlider" min="-300" max="300" value="0" class="w-full accent-blue-600">
+                </div>
+            </div>
+            <p class="text-xs text-center text-slate-400 italic">"Changing the sample mean slides it along the curve. The distance measured in 'Sigma Units' is the Z-statistic."</p>
+        </section>
+
+        <!-- 03 The Critical Region -->
+        <section class="card border-t-8 border-indigo-500">
+            <div class="flex items-center gap-3 mb-8">
+                <span class="w-10 h-10 rounded-xl bg-indigo-500 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-indigo-200">03</span>
+                <h2 class="text-3xl font-extrabold tracking-tight text-slate-800">The "Danger Zone"</h2>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8 italic">
+                <div class="p-8 bg-slate-50 border border-slate-100 rounded-3xl">
+                    <h4 class="text-xs font-black uppercase text-slate-400 mb-2">95% Confidence</h4>
+                    <p class="text-sm text-slate-700 font-medium">For a 2-tailed test, the critical Z values are <strong class="text-indigo-600 font-black italic">±1.96</strong>.</p>
+                </div>
+                <div class="p-8 bg-indigo-50 border border-indigo-100 rounded-3xl">
+                    <h4 class="text-xs font-black uppercase text-indigo-400 mb-2">The Verdict</h4>
+                    <p class="text-sm text-slate-700 font-medium">If your Z score is larger than 1.96, your result is statistically significant at the 5% level.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer Overlay -->
+        <footer class="text-center pb-32">
+            <a href="index.html" class="inline-block px-12 py-4 rounded-full bg-slate-900 text-white font-black uppercase tracking-widest text-xs hover:bg-slate-800 transition-colors shadow-sm mb-12">
+                Back to Adventure Home
+            </a>
+            <p class="mt-20 text-[10px] opacity-20 font-black uppercase tracking-[0.8em]">End of Z-Test Adventure - Andromechanic</p>
+        </footer>
+    </div>
+
+    <!-- Script -->
+    <script>
+        const slider = document.getElementById('zSlider');
+        const marker = document.getElementById('xMarker');
+        const label = document.getElementById('xLabel');
+        const valDisp = document.getElementById('zVal');
+
+        function update() {
+            const z = parseInt(slider.value) / 100;
+            valDisp.innerText = z.toFixed(2);
+            
+            // Map -3..3 to percentage on screen (centered at 50%)
+            const percent = 50 + (z * 10); 
+            marker.style.left = `${percent}%`;
+            label.style.left = `${percent}%`;
+
+            if (Math.abs(z) > 1.96) {
+                marker.className = "absolute left-1/2 bottom-0 w-1 h-32 bg-emerald-500 -translate-x-1/2 transition-all duration-300 shadow-[0_0_20px_rgba(16,185,129,0.5)]";
+                label.className = "absolute left-1/2 -bottom-10 -translate-x-1/2 text-[10px] font-black text-emerald-600 uppercase tracking-widest";
+                label.innerText = "x̄ (Significant)";
+            } else {
+                marker.className = "absolute left-1/2 bottom-0 w-1 h-32 bg-rose-500 -translate-x-1/2 transition-all duration-300";
+                label.className = "absolute left-1/2 -bottom-10 -translate-x-1/2 text-[10px] font-black text-rose-500 uppercase tracking-widest";
+                label.innerText = "x̄ (Not Significant)";
+            }
+        }
+
+        slider.addEventListener('input', update);
+        update();
+    </script>
+</body>
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central Tendency | Andromechanic's Stats Adventure</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="vguide.css">
+</head>
+<body class="p-4 md:p-16">
+    <div class="max-w-4xl mx-auto">
+        <!-- Main Header -->
+        <header class="text-center mb-20">
+            <div class="badge bg-amber-100 text-amber-700 mb-6">
+                Descriptive Statistics
+            </div>
+            <h1 class="text-5xl md:text-6xl font-black italic tracking-tighter mb-6 title-gradient leading-tight">
+                Central <br> Tendency
+            </h1>
+            <p class="text-xl text-slate-400 font-light tracking-wide italic">
+                Quantifying the "Average" or "Middle" of a Dataset. Once you have a center, you can measure the <a href="spread.html" class="text-amber-500 underline underline-offset-4 decoration-1">Spread</a>.
+            </p>
+        </header>
+
+        <!-- 01 The Mean -->
+        <section class="card border-t-8 border-blue-500">
+            <div class="flex items-center gap-3 mb-8">
+                <span class="w-10 h-10 rounded-xl bg-blue-500 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-blue-200">01</span>
+                <h2 class="text-3xl font-extrabold tracking-tight">The Arithmetic Mean (\(\bar{x}\))</h2>
+            </div>
+            <p class="text-lg text-slate-600 mb-8 font-medium">The sum of all values divided by the total number of items.</p>
+            
+            <div class="bg-blue-600 rounded-[2.5rem] p-12 text-white mb-8 text-center shadow-2xl relative overflow-hidden">
+                <p class="text-5xl math-font font-black mb-4">
+                    \( \bar{x} = \frac{\sum x_i}{n} \)
+                </p>
+                <p class="text-[10px] text-blue-200 uppercase font-black tracking-[0.4em]">The Balance Point of the Data</p>
+            </div>
+
+            <div class="p-6 bg-slate-50 rounded-2xl border border-slate-200">
+                <h4 class="text-xs font-black uppercase text-slate-400 mb-3 tracking-widest">Key Characteristic</h4>
+                <p class="text-sm text-slate-700 italic">Highly sensitive to <strong>Outliers</strong>. A single extremely high value can pull the mean away from the "typical" center.</p>
+            </div>
+        </section>
+
+        <!-- 02 The Median -->
+        <section class="card border-t-8 border-emerald-500">
+            <div class="flex items-center gap-3 mb-8">
+                <span class="w-10 h-10 rounded-xl bg-emerald-500 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-emerald-200">02</span>
+                <h2 class="text-3xl font-extrabold tracking-tight text-slate-800">The Median (\(M\))</h2>
+            </div>
+            <p class="text-lg text-slate-600 mb-8 italic">The exact "Middle" value when data is sorted in order.</p>
+
+            <div class="grid md:grid-cols-2 gap-6 mb-8">
+                <div class="p-8 bg-emerald-50 rounded-3xl border border-emerald-100 flex flex-col justify-center">
+                    <p class="text-xs font-bold text-emerald-600 uppercase mb-4 tracking-widest">Finding the Middle</p>
+                    <ul class="space-y-3 text-sm text-slate-700">
+                        <li>1. Sort the dataset in ascending order.</li>
+                        <li>2. If <strong>n is odd</strong>: The middle number.</li>
+                        <li>3. If <strong>n is even</strong>: The average of the two middle numbers.</li>
+                    </ul>
+                </div>
+                <div class="bg-slate-900 rounded-3xl p-8 text-white flex flex-col items-center justify-center">
+                    <div class="flex gap-2 mb-4">
+                        <span class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-xs">12</span>
+                        <span class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-xs">15</span>
+                        <span class="w-10 h-10 rounded-lg bg-emerald-500 flex items-center justify-center font-bold text-lg">18</span>
+                        <span class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-xs">21</span>
+                        <span class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-xs">45</span>
+                    </div>
+                    <p class="text-[10px] text-emerald-400 uppercase font-black tracking-widest">Resistance to Outliers</p>
+                </div>
+            </div>
+            <p class="text-sm text-slate-500 text-center italic">"The Median is robust—it doesn't care if that 45 becomes 4,500."</p>
+        </section>
+
+        <!-- 03 The Mode -->
+        <section class="card border-t-8 border-violet-500">
+            <div class="flex items-center gap-3 mb-8">
+                <span class="w-10 h-10 rounded-xl bg-violet-500 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-violet-200">03</span>
+                <h2 class="text-3xl font-extrabold tracking-tight text-slate-800">The Mode</h2>
+            </div>
+            <p class="text-slate-600 leading-relaxed mb-8">The value that appears most frequently in a dataset. Unlike Mean/Median, it can be used for <strong>Categorical</strong> data.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-violet-50 p-6 rounded-3xl border border-violet-100 text-center">
+                    <h4 class="font-bold text-violet-900">Unimodal</h4>
+                    <p class="text-xs text-violet-500 mt-2">One single peak (most common).</p>
+                </div>
+                <div class="bg-violet-50 p-6 rounded-3xl border border-violet-100 text-center">
+                    <h4 class="font-bold text-violet-900">Bimodal</h4>
+                    <p class="text-xs text-violet-500 mt-2">Two distinct frequencies are tied for highest.</p>
+                </div>
+                <div class="bg-violet-50 p-6 rounded-3xl border border-violet-100 text-center">
+                    <h4 class="font-bold text-violet-900">Multimodal</h4>
+                    <p class="text-xs text-violet-500 mt-2">Many frequent peaks or no unique mode.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 04 Skewness & Central Tendency -->
+        <section class="card border-t-8 border-rose-500 overflow-hidden">
+            <div class="flex items-center gap-3 mb-8">
+                <span class="w-10 h-10 rounded-xl bg-rose-500 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-rose-200">04</span>
+                <h2 class="text-3xl font-extrabold tracking-tight text-slate-800">Visualizing Skewness</h2>
+            </div>
+            
+            <div class="bg-slate-50 rounded-[2rem] p-10 border border-slate-200 mb-10">
+                <div class="flex flex-col md:flex-row gap-12 items-center">
+                    <!-- Symmetrical -->
+                    <div class="flex-1 text-center">
+                        <div class="h-32 w-full flex items-end justify-center gap-1 mb-4">
+                            <div class="w-4 h-8 bg-slate-300 rounded-t-lg"></div>
+                            <div class="w-4 h-16 bg-slate-300 rounded-t-lg"></div>
+                            <div class="w-4 h-24 bg-blue-500 rounded-t-lg shadow-lg"></div>
+                            <div class="w-4 h-16 bg-slate-300 rounded-t-lg"></div>
+                            <div class="w-4 h-8 bg-slate-300 rounded-t-lg"></div>
+                        </div>
+                        <h4 class="font-bold text-slate-800">Symmetrical</h4>
+                        <p class="text-[10px] text-blue-600 font-bold uppercase tracking-widest mt-1">Mean = Median = Mode</p>
+                    </div>
+                    <!-- Right Skewed -->
+                    <div class="flex-1 text-center">
+                        <div class="h-32 w-full flex items-end justify-center gap-1 mb-4">
+                            <div class="w-4 h-24 bg-rose-500 rounded-t-lg shadow-lg"></div>
+                            <div class="w-4 h-16 bg-emerald-500 rounded-t-lg"></div>
+                            <div class="w-4 h-12 bg-blue-500 rounded-t-lg"></div>
+                            <div class="w-4 h-6 bg-slate-300 rounded-t-lg"></div>
+                            <div class="w-4 h-4 bg-slate-300 rounded-t-lg"></div>
+                        </div>
+                        <h4 class="font-bold text-slate-800">Right Skewed (+)</h4>
+                        <p class="text-[10px] text-rose-600 font-bold uppercase tracking-widest mt-1">Mode < Median < Mean</p>
+                    </div>
+                </div>
+            </div>
+            <p class="text-sm text-slate-500 italic text-center">In right-skewed data (like income), the high values pull the <strong>Mean</strong> furthest to the right.</p>
+        </section>
+
+        <!-- 05 The Decision Verdict -->
+        <section class="mb-32">
+            <h2 class="text-sm font-black uppercase text-slate-300 mb-12 tracking-[0.5em] text-center italic">The Statistical Verdict</h2>
+
+            <!-- Summary Verdict Box -->
+            <div class="bg-slate-900 rounded-[4rem] p-16 text-white shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] relative overflow-hidden border-b-[12px] border-amber-500">
+                <div class="relative z-10 grid md:grid-cols-2 gap-12">
+                    <div>
+                        <h3 class="text-2xl font-black italic mb-6 text-amber-500 underline decoration-white/20 underline-offset-8">When to Use?</h3>
+                        <div class="space-y-6">
+                            <div class="flex gap-4">
+                                <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center font-bold text-xs">M</div>
+                                <p class="text-sm text-slate-400 leading-relaxed font-light">Use <strong class="text-white">Mean</strong> for normal data without severe outliers (e.g. Test scores).</p>
+                            </div>
+                            <div class="flex gap-4">
+                                <div class="w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center font-bold text-xs">M</div>
+                                <p class="text-sm text-slate-400 leading-relaxed font-light">Use <strong class="text-white">Median</strong> for skewed data (e.g. Housing prices, Income).</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-center text-center">
+                        <div>
+                            <div class="text-5xl font-black italic text-amber-500 mb-2 tracking-tighter">Stay Centered</div>
+                            <p class="text-xs text-slate-500 uppercase tracking-[0.4em] font-medium leading-relaxed">Choosing the right average <br> defines the story you tell.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none select-none overflow-hidden">
+                    <p class="text-[300px] font-black absolute -top-20 -left-20">MEAN</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Adventure Map -->
+        <section class="mb-32">
+            <h2 class="text-[10px] font-black uppercase text-slate-300 mb-8 tracking-[0.5em] text-center italic">Continue the Adventure</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <a href="spread.html" class="group p-8 rounded-[2rem] bg-white border border-slate-200 hover:border-emerald-500 hover:shadow-2xl hover:shadow-emerald-100 transition-all duration-500">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 group-hover:text-emerald-500 transition-colors">Immediate Next</span>
+                    <h4 class="text-xl font-bold mt-2 text-slate-800 italic">Measures of Spread</h4>
+                </a>
+                <a href="conditional_probability.html" class="group p-8 rounded-[2rem] bg-white border border-slate-200 hover:border-indigo-500 hover:shadow-2xl hover:shadow-indigo-100 transition-all duration-500">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 group-hover:text-indigo-500 transition-colors">Probability</span>
+                    <h4 class="text-xl font-bold mt-2 text-slate-800 italic">Conditional Prob</h4>
+                </a>
+                <a href="chi2gof.html" class="group p-8 rounded-[2rem] bg-white border border-slate-200 hover:border-rose-500 hover:shadow-2xl hover:shadow-rose-100 transition-all duration-500">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 group-hover:text-rose-500 transition-colors">Inference</span>
+                    <h4 class="text-xl font-bold mt-2 text-slate-800 italic">Chi-Square Tests</h4>
+                </a>
+            </div>
+        </section>
+
+        <!-- Footer Overlay -->
+        <footer class="text-center pb-32">
+            <a href="index.html" class="inline-block px-12 py-4 rounded-full bg-slate-100 text-slate-600 font-black uppercase tracking-widest text-xs hover:bg-slate-200 transition-colors shadow-sm">
+                Back to Adventure Home
+            </a>
+            <p class="mt-20 text-[10px] opacity-20 font-black uppercase tracking-[0.8em]">End of Central Tendency Adventure - Andromechanic</p>
+        </footer>
+    </div>
+</body>
+</html>

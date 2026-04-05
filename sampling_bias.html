@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sampling Bias | Andromechanic's Stats Adventure</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="vguide.css">
+    <style>
+        .dot { stroke: white; stroke-width: 1; transition: all 0.3s; }
+        .dot.selected { stroke: #fbbf24; stroke-width: 3; filter: drop-shadow(0 0 5px orange); }
+        .pool-active { border: 2px solid #6366f1; }
+    </style>
+</head>
+<body class="p-4 md:p-16">
+    <div class="max-w-4xl mx-auto">
+        <!-- Main Header -->
+        <header class="text-center mb-24">
+            <div class="badge bg-amber-100 text-amber-700 mb-6 uppercase tracking-[0.2em] font-bold">
+                The Logic of Data
+            </div>
+            <h1 class="text-5xl md:text-6xl font-black italic tracking-tighter mb-6 title-gradient leading-tight">
+                Sampling <br> Bias
+            </h1>
+            <p class="text-xl text-slate-400 font-light tracking-wide italic max-w-2xl mx-auto leading-relaxed">
+                Even the most complex model cannot save a sample that is fundamentally flawed.
+            </p>
+        </header>
+
+        <!-- 01 The Hook -->
+        <section class="card border-t-8 border-amber-500">
+            <div class="flex items-center gap-3 mb-8">
+                <span class="w-10 h-10 rounded-xl bg-amber-500 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-amber-200">01</span>
+                <h2 class="text-3xl font-extrabold tracking-tight text-slate-800">The Hook</h2>
+            </div>
+            <p class="text-lg text-slate-600 leading-relaxed mb-6 italic">"A big sample is not always a good sample."</p>
+            <p class="text-sm text-slate-500 mb-8 leading-relaxed">
+                Imagine you want to know the average income of a city, so you stand outside a luxury car dealership and ask people. Your mean will be massive—but it will be <strong>totally wrong</strong>. This is <strong>Selection Bias</strong>.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 italic mt-12">
+                <div class="p-8 bg-slate-900 border border-white/5 rounded-3xl shadow-xl text-white">
+                    <h4 class="text-[10px] font-black uppercase text-amber-400 mb-2 tracking-widest">Selection Bias</h4>
+                    <p class="text-sm opacity-60">Certain groups are systematically excluded from the results.</p>
+                </div>
+                <div class="p-8 bg-slate-900 border border-white/5 rounded-3xl shadow-xl text-white">
+                    <h4 class="text-[10px] font-black uppercase text-amber-400 mb-2 tracking-widest">Survival Bias</h4>
+                    <p class="text-sm opacity-60">Only looking at the "winners" or "survivors" and ignoring the failures that aren't anymore.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 02 Interactive Prop -->
+        <section class="card border-t-8 border-indigo-500">
+            <div class="flex items-center gap-3 mb-8">
+                <span class="w-10 h-10 rounded-xl bg-indigo-500 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-indigo-200">02</span>
+                <h2 class="text-3xl font-extrabold tracking-tight text-slate-800">Interactive: Bias in the Pool</h2>
+            </div>
+            
+            <div class="p-10 bg-slate-950 rounded-[2.5rem] shadow-2xl relative overflow-hidden mb-12">
+                <div class="flex flex-col md:flex-row gap-12">
+                    <!-- The Population View -->
+                    <div class="flex-1">
+                        <p class="text-[10px] font-black uppercase text-indigo-400 tracking-widest mb-6 border-b border-indigo-200/10 pb-2">Population Pool</p>
+                        <div id="pool" class="relative w-full h-[300px] border border-white/5 rounded-3xl bg-slate-900 overflow-hidden">
+                            <!-- Balls will be populated here -->
+                             <svg id="poolSvg" class="w-full h-full"></svg>
+                        </div>
+                    </div>
+
+                    <!-- HUD -->
+                    <div class="w-full md:w-64 space-y-8">
+                        <div class="space-y-4">
+                            <label class="text-[10px] font-black uppercase text-amber-400 tracking-widest">Sampling Method</label>
+                            <div class="flex flex-col gap-2">
+                                <button data-method="random" class="method-btn w-full py-4 rounded-2xl border border-white/10 text-white font-black uppercase tracking-widest text-[10px] hover:bg-indigo-500 transition-all shadow-lg active:scale-95 bg-slate-900">True Random</button>
+                                <button data-method="convenience" class="method-btn w-full py-4 rounded-2xl border border-white/10 text-white font-black uppercase tracking-widest text-[10px] hover:bg-amber-600 transition-all shadow-lg active:scale-95 bg-slate-900">Convenience (Top Left Only)</button>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="p-6 rounded-3xl bg-white/5 border border-white/10 text-center">
+                                <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-2">Population Avg</p>
+                                <p id="popAvg" class="text-xl font-black italic text-emerald-400">?</p>
+                            </div>
+                            <div class="p-6 rounded-3xl bg-white/5 border border-white/10 text-center">
+                                <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-2">Sample Avg</p>
+                                <p id="sampleAvg" class="text-xl font-black italic text-rose-400">?</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="text-[10px] text-center text-slate-400 uppercase tracking-widest leading-loose max-w-lg mx-auto italic">
+                "Wait... Why is the Convenience Sample mean so high? Because the 'expensive' data points were clustered at the top left!"
+            </p>
+        </section>
+
+        <!-- 03 The Verdict -->
+        <section class="mb-32">
+            <h2 class="text-sm font-black uppercase text-slate-300 mb-12 tracking-[0.5em] text-center italic">03. The Logical Verdict</h2>
+            <div class="bg-amber-900 flex flex-col md:flex-row items-center border-b-[12px] border-amber-500 rounded-[4rem] p-16 text-white shadow-3xl relative overflow-hidden gap-12">
+                <div class="flex-1 relative z-10">
+                    <h3 class="text-3xl font-black italic mb-8 tracking-widest uppercase italic underline decoration-white/20 underline-offset-8 decoration-4">The Golden Rule</h3>
+                    <p class="text-base text-amber-100 leading-relaxed font-light italic mb-8">
+                        The only defense against bias is **Randomness**. A truly random sample ensures that every single perspective or data point has an equal chance of being heard. 
+                    </p>
+                    <p class="text-xs text-amber-200/50 uppercase font-black italic">Randomness is the Antidote to Assumption.</p>
+                </div>
+                <div class="flex-1 relative">
+                    <!-- Abstract representation of chaos matching order -->
+                    <div class="grid grid-cols-4 gap-2 opacity-20">
+                        <div class="h-6 bg-white rounded animate-pulse"></div>
+                        <div class="h-6 bg-white rounded"></div>
+                        <div class="h-6 bg-white rounded animate-pulse"></div>
+                        <div class="h-6 bg-white rounded"></div>
+                        <div class="h-6 bg-white rounded"></div>
+                        <div class="h-6 bg-white rounded animate-pulse"></div>
+                        <div class="h-6 bg-white rounded"></div>
+                        <div class="h-6 bg-white rounded"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer Overlay -->
+        <footer class="text-center pb-32">
+            <a href="index.html" class="inline-block px-12 py-4 rounded-full bg-slate-900 text-white font-black uppercase tracking-widest text-xs hover:bg-slate-800 transition-colors shadow-sm mb-12">
+                Back to Adventure Home
+            </a>
+            <p class="mt-2 text-[10px] opacity-20 font-black uppercase tracking-[0.8em]">End of Bias Adventure - Andromechanic</p>
+        </footer>
+    </div>
+
+    <!-- Script -->
+    <script>
+        const svg = document.getElementById('poolSvg');
+        const popAvgDisp = document.getElementById('popAvg');
+        const sampleAvgDisp = document.getElementById('sampleAvg');
+        const methodBtns = document.querySelectorAll('.method-btn');
+
+        let population = [];
+        let sample = [];
+
+        function initPopulation() {
+            population = [];
+            svg.innerHTML = '';
+            for (let i = 0; i < 200; i++) {
+                const x = Math.random() * 800;
+                const y = Math.random() * 300;
+                
+                // Income distribution: Higher income clustered in top-left
+                let income = Math.random() * 50;
+                if (x < 300 && y < 150) {
+                    income += 40 + Math.random() * 60;
+                }
+                
+                const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                dot.setAttribute("cx", x);
+                dot.setAttribute("cy", y);
+                dot.setAttribute("r", 4);
+                dot.setAttribute("class", "dot");
+                dot.setAttribute("fill", `rgba(52, 211, 153, ${income/100 + 0.1})`);
+                svg.appendChild(dot);
+                
+                population.push({ x, y, income, el: dot });
+            }
+            
+            const avg = population.reduce((a,b) => a + b.income, 0) / population.length;
+            popAvgDisp.innerText = avg.toFixed(1);
+        }
+
+        function runSample(method) {
+            // Reset previous sample
+            population.forEach(p => p.el.classList.remove('selected'));
+            sample = [];
+            
+            if (method === 'random') {
+                const shuffled = [...population].sort(() => 0.5 - Math.random());
+                sample = shuffled.slice(0, 20);
+            } else if (method === 'convenience') {
+                // Systematic bias: only taking from top-left (e.g., dealershiip neighborhood)
+                sample = population.filter(p => p.x < 300 && p.y < 150).slice(0, 20);
+            }
+            
+            sample.forEach(s => s.el.classList.add('selected'));
+            
+            const avg = sample.reduce((a,b) => a + b.income, 0) / sample.length;
+            sampleAvgDisp.innerText = avg.toFixed(1);
+        }
+
+        methodBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                methodBtns.forEach(b => b.classList.remove('bg-indigo-500', 'bg-amber-600'));
+                const method = e.target.closest('button').dataset.method;
+                if (method === 'random') e.target.closest('button').classList.add('bg-indigo-500');
+                if (method === 'convenience') e.target.closest('button').classList.add('bg-amber-600');
+                runSample(method);
+            });
+        });
+
+        initPopulation();
+    </script>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Distribution Hub | Andromechanic's Stats Adventure</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="vguide.css">
+</head>
+<body class="p-4 md:p-16">
+    <div class="max-w-6xl mx-auto">
+        <!-- Main Header -->
+        <header class="text-center mb-24">
+            <div class="badge bg-violet-100 text-violet-700 mb-6 uppercase tracking-[0.2em] font-bold">
+                The Adventure Hub
+            </div>
+            <h1 class="text-6xl md:text-8xl font-black italic tracking-tighter mb-6 title-gradient leading-tight">
+                Distribution <br> Landscape
+            </h1>
+            <p class="text-xl text-slate-400 font-light tracking-wide italic max-w-2xl mx-auto">
+                Explore every possible shape of randomness, from discrete success to continuous infinity. 
+                Choose your destiny below.
+            </p>
+        </header>
+
+        <!-- Search / Filter (Visual Placeholder) -->
+        <div class="flex justify-center mb-20 gap-4">
+            <span class="px-6 py-2 rounded-full bg-violet-500 text-white font-bold text-xs uppercase tracking-widest shadow-lg shadow-violet-200">Discrete</span>
+            <span class="px-6 py-2 rounded-full bg-slate-100 text-slate-400 font-bold text-xs uppercase tracking-widest">Continuous</span>
+            <span class="px-6 py-2 rounded-full bg-slate-100 text-slate-400 font-bold text-xs uppercase tracking-widest">Inference</span>
+        </div>
+
+        <!-- Discrete Distributions -->
+        <section class="mb-32">
+            <h2 class="text-sm font-black uppercase text-slate-300 mb-12 tracking-[0.5em] text-center italic">Discrete Adventures (Counting Success)</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Bernoulli -->
+                <a href="bernoulli.html" class="card border-t-8 border-cyan-500 group hover:border-cyan-600 hover:shadow-2xl hover:shadow-cyan-100 transition-all duration-500">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 group-hover:text-cyan-500 transition-colors">01. Bernoulli</span>
+                    <h3 class="text-2xl font-black italic mt-2 text-slate-800">Single Trail</h3>
+                    <p class="text-sm text-slate-500 mt-4 leading-relaxed italic">Yes or No? 1 or 0? The absolute atom of probability.</p>
+                </a>
+
+                <!-- Binomial -->
+                <a href="binomial.html" class="card border-t-8 border-emerald-500 group hover:border-emerald-600 hover:shadow-2xl hover:shadow-emerald-100 transition-all duration-500">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 group-hover:text-emerald-500 transition-colors">02. Binomial</span>
+                    <h3 class="text-2xl font-black italic mt-2 text-slate-800">Repeat Trials</h3>
+                    <p class="text-sm text-slate-500 mt-4 leading-relaxed italic">Counting successes across $n$ independent attempts.</p>
+                </a>
+
+                <!-- Poisson -->
+                <a href="poisson.html" class="card border-t-8 border-amber-500 group hover:border-amber-600 hover:shadow-2xl hover:shadow-amber-100 transition-all duration-500">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 group-hover:text-amber-500 transition-colors">03. Poisson</span>
+                    <h3 class="text-2xl font-black italic mt-2 text-slate-800">Rare Events</h3>
+                    <p class="text-sm text-slate-500 mt-4 leading-relaxed italic">Predicting counts over time, distance, or space.</p>
+                </a>
+
+                 <!-- Geometric -->
+                 <a href="geometric.html" class="card border-t-8 border-rose-500 group hover:border-rose-600 hover:shadow-2xl hover:shadow-rose-100 transition-all duration-500">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 group-hover:text-rose-500 transition-colors">04. Geometric</span>
+                    <h3 class="text-2xl font-black italic mt-2 text-slate-800">Trial until Success</h3>
+                    <p class="text-sm text-slate-500 mt-4 leading-relaxed italic">How many "failures" before the first "success"?</p>
+                </a>
+
+                <!-- Hypergeometric -->
+                <a href="hypergeometric.html" class="card border-t-8 border-slate-800 group hover:border-slate-900 hover:shadow-2xl hover:shadow-slate-200 transition-all duration-500">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 group-hover:text-slate-800 transition-colors">05. Hypergeometric</span>
+                    <h3 class="text-2xl font-black italic mt-2 text-slate-800">Finite Population</h3>
+                    <p class="text-sm text-slate-500 mt-4 leading-relaxed italic">Sampling without replacement. The real world.</p>
+                </a>
+
+                <!-- Discrete Uniform -->
+                <a href="uniform.html" class="card border-t-8 border-indigo-500 group hover:border-indigo-600 hover:shadow-2xl hover:shadow-indigo-100 transition-all duration-500">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 group-hover:text-indigo-500 transition-colors">06. Uniform</span>
+                    <h3 class="text-2xl font-black italic mt-2 text-slate-800">Fair Dice</h3>
+                    <p class="text-sm text-slate-500 mt-4 leading-relaxed italic">When every outcome has the exact same baseline chance.</p>
+                </a>
+            </div>
+        </section>
+
+        <!-- Continuous Distributions -->
+        <section class="mb-32">
+            <h2 class="text-sm font-black uppercase text-slate-300 mb-12 tracking-[0.5em] text-center italic">Continuous Adventures (Measuring Flow)</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Normal -->
+                <a href="normal.html" class="card border-t-8 border-blue-500 group hover:border-blue-600 hover:shadow-2xl hover:shadow-blue-100 transition-all duration-500">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 group-hover:text-blue-500 transition-colors">07. Normal</span>
+                    <h3 class="text-2xl font-black italic mt-2 text-slate-800">The Bell Curve</h3>
+                    <p class="text-sm text-slate-500 mt-4 leading-relaxed italic">The king of all patterns. Symmetry in chaos.</p>
+                </a>
+
+                <!-- Exponential -->
+                <a href="exponential.html" class="card border-t-8 border-teal-500 group hover:border-teal-600 hover:shadow-2xl hover:shadow-teal-100 transition-all duration-500">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 group-hover:text-teal-500 transition-colors">08. Exponential</span>
+                    <h3 class="text-2xl font-black italic mt-2 text-slate-800">Waiting Times</h3>
+                    <p class="text-sm text-slate-500 mt-4 leading-relaxed italic">The interval between random events. Half-lives.</p>
+                </a>
+
+                <!-- Student T -->
+                <a href="student_t.html" class="card border-t-8 border-slate-600 group hover:border-slate-700 hover:shadow-2xl transition-all duration-500">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 group-hover:text-slate-600 transition-colors">09. Student's T</span>
+                    <h3 class="text-2xl font-black italic mt-2 text-slate-800">Small Samples</h3>
+                    <p class="text-sm text-slate-500 mt-4 leading-relaxed italic">When you don't know the population, use the fat tails.</p>
+                </a>
+
+                 <!-- Beta -->
+                 <a href="beta.html" class="card border-t-8 border-purple-500 group hover:border-purple-600 hover:shadow-2xl transition-all duration-500">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 group-hover:text-purple-500 transition-colors">10. Beta</span>
+                    <h3 class="text-2xl font-black italic mt-2 text-slate-800">Prob of Probs</h3>
+                    <p class="text-sm text-slate-500 mt-4 leading-relaxed italic">Distributing weight on the $(0, 1)$ interval. Bayesian engine.</p>
+                </a>
+
+                <!-- Chi-Square -->
+                <a href="chi_square.html" class="card border-t-8 border-rose-600 group hover:border-rose-700 hover:shadow-2xl transition-all duration-500">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 group-hover:text-rose-600 transition-colors">11. Chi-Square</span>
+                    <h3 class="text-2xl font-black italic mt-2 text-slate-800">Variance Testing</h3>
+                    <p class="text-sm text-slate-500 mt-4 leading-relaxed italic">Summing up the squared errors. The test of fit.</p>
+                </a>
+
+                 <!-- F-Distribution -->
+                 <a href="f_dist.html" class="card border-t-8 border-amber-600 group hover:border-amber-700 hover:shadow-2xl transition-all duration-500">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 group-hover:text-amber-600 transition-colors">12. F-Dist</span>
+                    <h3 class="text-2xl font-black italic mt-2 text-slate-800">Ratio of Variance</h3>
+                    <p class="text-sm text-slate-500 mt-4 leading-relaxed italic">The backbone of ANOVA. Comparing groups.</p>
+                </a>
+            </div>
+        </section>
+
+        <!-- Inference Tools -->
+        <section class="mb-32">
+            <h2 class="text-sm font-black uppercase text-slate-300 mb-12 tracking-[0.5em] text-center italic">Inference Tools (Making Decisions)</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-center">
+                <!-- Test Statistics -->
+                <a href="test_statistics.html" class="p-8 rounded-[2rem] bg-indigo-900 text-white hover:scale-105 transition-all duration-500 shadow-2xl relative overflow-hidden">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-indigo-400">Decision Engine</span>
+                    <h3 class="text-xl font-black italic mt-2">Test Stats</h3>
+                    <p class="text-[10px] text-slate-400 mt-4 leading-relaxed italic">\(Z, t, F, \chi^2\) - The Signal Seekers.</p>
+                </a>
+
+                <!-- P-Values -->
+                <a href="p_values.html" class="p-8 rounded-[2rem] bg-white border border-slate-100 hover:border-blue-500 transition-all duration-500">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-300">Evidence</span>
+                    <h3 class="text-xl font-bold mt-2 text-slate-800 italic">P-Values</h3>
+                    <p class="text-[10px] text-slate-400 mt-2 italic">Surprise Scale.</p>
+                </a>
+
+                <!-- ANOVA -->
+                <a href="anova.html" class="p-8 rounded-[2rem] bg-white border border-slate-100 hover:border-emerald-500 transition-all duration-500">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-300">Multi-Group</span>
+                    <h3 class="text-xl font-bold mt-2 text-slate-800 italic">ANOVA</h3>
+                    <p class="text-[10px] text-slate-400 mt-2 italic">Signal vs Noise.</p>
+                </a>
+
+                <!-- Degrees of Freedom -->
+                <a href="degrees_of_freedom.html" class="p-8 rounded-[2rem] bg-white border border-slate-100 hover:border-rose-500 transition-all duration-500">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-300">Constraints</span>
+                    <h3 class="text-xl font-bold mt-2 text-slate-800 italic">D.O.F</h3>
+                    <p class="text-[10px] text-slate-400 mt-2 italic">Freedom to vary.</p>
+                </a>
+            </div>
+        </section>
+
+        <!-- Footer Overlay -->
+        <footer class="text-center pb-32 pt-20 border-t border-slate-100">
+            <a href="index.html" class="inline-block px-12 py-4 rounded-full bg-slate-900 text-white font-black uppercase tracking-widest text-xs hover:bg-slate-800 transition-colors shadow-xl shadow-slate-200 mb-20">
+                Back to Adventure Home
+            </a>
+            <h2 class="text-[10px] font-black uppercase text-slate-300 mb-12 tracking-[0.8em] italic">Back to Foundations</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto opacity-40 hover:opacity-100 transition-opacity">
+                <a href="central_tendency.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-indigo-500">Central Tendency</a>
+                <a href="spread.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-indigo-500">Measures of Spread</a>
+                <a href="conditional_probability.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-indigo-500">Conditional Prob</a>
+                <a href="Bayes.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-indigo-500">Bayes' Theorem</a>
+            </div>
+            <p class="mt-20 text-[10px] opacity-20 font-black uppercase tracking-[0.5em]">Andromechanic's Stats Adventure</p>
+        </footer>
+    </div>
+</body>
+</html>

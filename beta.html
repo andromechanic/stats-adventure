@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beta Distribution | Andromechanic's Stats Adventure</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="vguide.css">
+</head>
+<body class="p-4 md:p-16">
+    <div class="max-w-4xl mx-auto">
+        <!-- Main Header -->
+        <header class="text-center mb-24">
+            <div class="badge bg-purple-100 text-purple-700 mb-6 uppercase tracking-[0.2em] font-bold">
+                The Bayesian Prior
+            </div>
+            <h1 class="text-5xl md:text-6xl font-black italic tracking-tighter mb-6 title-gradient leading-tight">
+                Beta <br> Distribution
+            </h1>
+            <p class="text-xl text-slate-400 font-light tracking-wide italic">
+                A Distribution of Probabilities, Confined to the $(0, 1)$ Interval
+            </p>
+        </header>
+
+        <!-- 01 The Hook -->
+        <section class="card border-t-8 border-purple-500">
+            <div class="flex items-center gap-3 mb-8">
+                <span class="w-10 h-10 rounded-xl bg-purple-500 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-purple-200">01</span>
+                <h2 class="text-3xl font-extrabold tracking-tight text-slate-800">The Hook</h2>
+            </div>
+            <p class="text-lg text-slate-600 leading-relaxed mb-6 italic">"What do I think the conversion rate of this website is if 10 people clicked out of 100?"</p>
+            <p class="text-sm text-slate-500 leading-relaxed mb-8">
+                The Beta distribution is unique because it is defined on the interval \([0, 1]\). This makes it perfect for representing <strong>uncertainty about a probability</strong>. It is the conjugate prior for Bernoulli and Binomial processes in Bayesian statistics.
+            </p>
+            <div class="grid md:grid-cols-2 gap-8 mb-8">
+                <div class="p-8 bg-purple-900 rounded-[2rem] text-white shadow-xl relative overflow-hidden text-center md:text-left">
+                    <p class="text-2xl math-font font-black italic">\( f(x; \alpha, \beta) = \frac{x^{\alpha-1} (1-x)^{\beta-1}}{B(\alpha, \beta)} \)</p>
+                    <div class="absolute -right-10 -bottom-10 opacity-5 pointer-events-none">
+                        <p class="text-[120px] font-black italic uppercase tracking-tighter">BETA</p>
+                    </div>
+                </div>
+                <div class="p-8 bg-purple-50 border border-purple-100 rounded-3xl flex items-center justify-center italic text-center">
+                    <p class="text-2xl font-black italic text-slate-300">"Prior + Data = Posterior"</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 02 Shape Components -->
+        <section class="card border-t-8 border-indigo-500">
+            <div class="flex items-center gap-3 mb-8">
+                <span class="w-10 h-10 rounded-xl bg-indigo-500 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-indigo-200">02</span>
+                <h2 class="text-3xl font-extrabold tracking-tight text-slate-800">The Tuning Knobs (\(\alpha, \beta\))</h2>
+            </div>
+            <p class="text-sm text-slate-600 mb-8 italic">The shape of the Beta distribution is incredibly flexible.</p>
+            <div class="grid md:grid-cols-3 gap-4 italic text-center">
+                 <div class="p-4 bg-slate-50 rounded-2xl border border-slate-100 text-[10px] font-black text-slate-400 uppercase">U-Shaped</div>
+                 <div class="p-4 bg-slate-50 rounded-2xl border border-slate-100 text-[10px] font-black text-slate-400 uppercase">Bell-Curve</div>
+                 <div class="p-4 bg-slate-50 rounded-2xl border border-slate-100 text-[10px] font-black text-slate-400 uppercase">Flat (Uniform)</div>
+            </div>
+            <div class="p-8 mt-10 bg-indigo-50 rounded-3xl border border-indigo-100 text-center">
+                <h4 class="text-xs font-black uppercase text-indigo-400 mb-2">Think of it this way:</h4>
+                <p class="text-sm text-slate-700 italic">\(\alpha\) = Successful outcomes + 1, \(\beta\) = Failed outcomes + 1.</p>
+            </div>
+        </section>
+
+        <!-- 03 Interactive Prop -->
+        <section class="card border-t-8 border-purple-600">
+            <div class="flex items-center gap-3 mb-8">
+                <span class="w-10 h-10 rounded-xl bg-purple-600 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-purple-200">03</span>
+                <h2 class="text-3xl font-extrabold tracking-tight text-slate-800">Interactive: The Prior Engine</h2>
+            </div>
+            
+            <div class="bg-slate-900 rounded-[2.5rem] p-10 mb-10 shadow-2xl relative overflow-hidden">
+                <div class="h-64 mb-10">
+                    <svg id="canvas" viewBox="0 0 1000 300" class="w-full h-full">
+                        <path id="path" d="" fill="rgba(168, 85, 247, 0.2)" stroke="#a855f7" stroke-width="4" stroke-linecap="round"/>
+                        <line x1="0" y1="280" x2="1000" y2="280" stroke="rgba(255,255,255,0.1)" stroke-width="2"/>
+                    </svg>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-10">
+                    <div class="space-y-4">
+                        <label class="flex justify-between text-xs font-black text-purple-400 uppercase tracking-widest">
+                            Successful-ish (\(\alpha\)) <span id="aText">2</span>
+                        </label>
+                        <input type="range" id="aSlider" min="1" max="100" value="20" class="w-full accent-purple-500 bg-slate-800 rounded-lg">
+                    </div>
+                    <div class="space-y-4">
+                        <label class="flex justify-between text-xs font-black text-purple-400 uppercase tracking-widest">
+                            Failure-ish (\(\beta\)) <span id="bText">2</span>
+                        </label>
+                        <input type="range" id="bSlider" min="1" max="100" value="20" class="w-full accent-purple-500 bg-slate-800 rounded-lg">
+                    </div>
+                </div>
+            </div>
+            <p class="text-xs text-center text-slate-400 italic">"Notice how when \(\alpha = \beta = 1\) you get a flat Uniform distribution. As you add values, the peak represents your 'best guess' at the probability."</p>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center pb-32">
+            <a href="distributions.html" class="inline-block px-12 py-4 rounded-full bg-slate-100 text-slate-600 font-black uppercase tracking-widest text-xs hover:bg-slate-200 transition-colors">
+                Back to Distribution Hub
+            </a>
+            <p class="mt-20 text-[10px] opacity-20 font-black uppercase tracking-[0.8em]">End of Beta Adventure - Andromechanic</p>
+        </footer>
+    </div>
+
+    <!-- Script -->
+    <script>
+        const aSlider = document.getElementById('aSlider');
+        const bSlider = document.getElementById('bSlider');
+        const aText = document.getElementById('aText');
+        const bText = document.getElementById('bText');
+        const path = document.getElementById('path');
+
+        function update() {
+            const alpha = parseInt(aSlider.value) / 10;
+            const beta = parseInt(bSlider.value) / 10;
+            
+            aText.innerText = alpha.toFixed(1);
+            bText.innerText = beta.toFixed(1);
+            
+            let d = "M 0 280 "; 
+            for (let x = 0; x <= 1000; x += 10) {
+                const normX = x / 1000;
+                // Approx Beta PDF: x^(alpha-1) * (1-x)^(beta-1)
+                const prob = Math.pow(normX, alpha - 1) * Math.pow(1 - normX, beta - 1);
+                
+                // Scale factor to make it look nice
+                const y = 280 - (Math.min(prob, 2.5) * 100); 
+                d += `L ${x} ${Math.max(y, 10)} `;
+            }
+            d += " L 1000 280 Z";
+            path.setAttribute('d', d);
+        }
+
+        aSlider.addEventListener('input', update);
+        bSlider.addEventListener('input', update);
+        update();
+    </script>
+</body>
+</html>

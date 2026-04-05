@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confidence Intervals | Andromechanic's Stats Adventure</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="vguide.css">
+    <style>
+        .interval-line { stroke: #6366f1; stroke-width: 4; stroke-linecap: round; transition: all 0.3s; }
+        .true-mean { stroke: #10b981; stroke-width: 2; stroke-dasharray: 4; }
+    </style>
+</head>
+<body class="p-4 md:p-16">
+    <div class="max-w-4xl mx-auto">
+        <!-- Main Header -->
+        <header class="text-center mb-24">
+            <div class="badge bg-indigo-100 text-indigo-700 mb-6 uppercase tracking-[0.2em] font-bold">
+                Estimation under Uncertainty
+            </div>
+            <h1 class="text-5xl md:text-6xl font-black italic tracking-tighter mb-6 title-gradient leading-tight">
+                Confidence <br> Intervals
+            </h1>
+            <p class="text-xl text-slate-400 font-light tracking-wide italic max-w-2xl mx-auto leading-relaxed">
+                We can't be always right, but we can be "95% sure" where the truth is hiding.
+            </p>
+        </header>
+
+        <!-- 01 The Hook -->
+        <section class="card border-t-8 border-indigo-500">
+            <div class="flex items-center gap-3 mb-8">
+                <span class="w-10 h-10 rounded-xl bg-indigo-500 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-indigo-200">01</span>
+                <h2 class="text-3xl font-extrabold tracking-tight text-slate-800">The Net vs The Spear</h2>
+            </div>
+            <p class="text-lg text-slate-600 leading-relaxed mb-6 italic">"Point estimation is like trying to hit a fish with a spear. Interval estimation is like using a net."</p>
+            <p class="text-sm text-slate-500 mb-8 leading-relaxed">
+                Rather than giving a single number (Sample Mean), a <strong>Confidence Interval</strong> gives us a range. It tells us how much precision we really have given the sample size ($n$) and the variation ($\sigma$).
+            </p>
+            <div class="p-8 bg-slate-900 rounded-[2.5rem] text-white text-center shadow-xl mb-10 relative overflow-hidden">
+                <p class="text-4xl md:text-6xl math-font italic">\( CI = \bar{x} \pm Z^* \left(\frac{\sigma}{\sqrt{n}}\right) \)</p>
+                <p class="text-xs text-indigo-400 font-bold uppercase tracking-[0.4em] mt-4 italic opacity-50">The Range of Probable Truth</p>
+            </div>
+        </section>
+
+        <!-- 02 Interactive Prop -->
+        <section class="card border-t-8 border-emerald-500">
+            <div class="flex items-center gap-3 mb-8">
+                <span class="w-10 h-10 rounded-xl bg-emerald-500 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-emerald-200">02</span>
+                <h2 class="text-3xl font-extrabold tracking-tight text-slate-800 italic">Interactive: The Precision Net</h2>
+            </div>
+            
+            <div class="bg-slate-950 rounded-[2.5rem] p-10 mb-10 shadow-2xl relative overflow-hidden h-[400px]">
+                <svg id="ciCanvas" viewBox="0 0 800 300" class="w-full h-full">
+                    <!-- Ground truth mean -->
+                    <line x1="400" y1="50" x2="400" y2="250" class="true-mean opacity-20"/>
+                    <text x="410" y="45" fill="rgba(16, 185, 129, 0.4)" class="text-[10px] font-black uppercase tracking-widest">True Pop Mean</text>
+                    
+                    <!-- Interval line -->
+                    <line id="netLine" x1="300" y1="150" x2="500" y2="150" class="interval-line shadow-lg shadow-indigo-500/20"/>
+                    <circle id="sampleCenter" cx="400" cy="150" r="6" fill="#fff" class="shadow-xl"/>
+                    
+                    <!-- Labels -->
+                    <text id="lowLabel" x="290" y="180" fill="rgba(255,255,255,0.4)" text-anchor="middle" class="text-[9px] font-black">Lower Bound</text>
+                    <text id="highLabel" x="510" y="180" fill="rgba(255,255,255,0.4)" text-anchor="middle" class="text-[9px] font-black">Upper Bound</text>
+                </svg>
+
+                <div class="absolute bottom-10 left-1/2 -translateX-1/2 flex items-center gap-10 bg-white/5 backdrop-blur-xl border border-white/10 p-6 rounded-2xl w-[90%] md:w-auto -translate-x-1/2">
+                    <div class="space-y-3">
+                        <label class="text-[10px] font-black uppercase text-indigo-400 tracking-widest">Confidence (%)</label>
+                        <select id="confSelect" class="bg-transparent text-white font-black text-xl italic outline-none cursor-pointer">
+                            <option value="90">90%</option>
+                            <option value="95" selected>95%</option>
+                            <option value="99">99%</option>
+                        </select>
+                    </div>
+                    <div class="h-10 w-px bg-white/10"></div>
+                    <div class="space-y-3">
+                        <label class="text-[10px] font-black uppercase text-rose-400 tracking-widest">Sample Size (\(n\))</label>
+                        <input type="range" id="nSlider" min="10" max="200" value="50" class="w-24 accent-rose-500">
+                    </div>
+                    <div class="h-10 w-px bg-white/10"></div>
+                    <div id="statusBox" class="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-xl text-emerald-400 font-black italic text-xs uppercase tracking-widest">
+                        Truth Captured
+                    </div>
+                </div>
+            </div>
+            <p class="text-[10px] text-center text-slate-400 uppercase tracking-widest leading-loose max-w-lg mx-auto italic">
+                "Wait... To be 99% sure, the 'net' has to be wider. As you increase the sample size ($n$), notice how the net gets more precise and narrow!"
+            </p>
+        </section>
+
+        <!-- 03 The Verdict -->
+        <section class="mb-32">
+            <h2 class="text-sm font-black uppercase text-slate-300 mb-12 tracking-[0.5em] text-center italic">03. The Confidence Verdict</h2>
+            <div class="bg-indigo-900 border-b-[12px] border-indigo-500 rounded-[4rem] p-16 text-white shadow-3xl text-center relative overflow-hidden">
+                <div class="relative z-10">
+                    <h3 class="text-3xl font-black italic mb-10 text-white tracking-widest italic tracking-widest uppercase italic underline decoration-white/20 underline-offset-8 decoration-4">What 95% means</h3>
+                    <p class="text-base text-indigo-200 leading-relaxed font-light italic max-w-2xl mx-auto italic">
+                        It doesn't mean your specific range has a 95% chance of being right. It means if we repeated this and built 100 nets, <strong>exactly 95 of them</strong> would successfully catch the fish.
+                    </p>
+                </div>
+                <!-- Background Decoration -->
+                <div class="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none select-none overflow-hidden">
+                    <p class="text-[300px] font-black absolute -top-20 -left-20 text-indigo-700">CERTAIN</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer Navigation Overlay -->
+        <footer class="text-center pb-32">
+            <a href="index.html" class="inline-block px-12 py-4 rounded-full bg-slate-900 text-white font-black uppercase tracking-widest text-xs hover:bg-slate-800 transition-colors shadow-sm mb-12">
+                Back to Adventure Home
+            </a>
+            
+            <div class="grid grid-cols-2 gap-4 max-w-sm mx-auto">
+                <a href="clt.html" class="p-6 rounded-2xl bg-white border border-slate-100 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-emerald-400 shadow-sm transition-all hover:-translate-y-1">CLT Prereq</a>
+                <a href="p_values.html" class="p-6 rounded-2xl bg-white border border-slate-100 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-indigo-400 shadow-sm transition-all hover:-translate-y-1">Next: P-Values</a>
+            </div>
+            
+            <p class="mt-20 text-[10px] opacity-20 font-black uppercase tracking-[0.8em]">End of Estimation Adventure - Andromechanic</p>
+        </footer>
+    </div>
+
+    <!-- Script -->
+    <script>
+        const netLine = document.getElementById('netLine');
+        const center = document.getElementById('sampleCenter');
+        const confSelect = document.getElementById('confSelect');
+        const nSlider = document.getElementById('nSlider');
+        const lowLabel = document.getElementById('lowLabel');
+        const highLabel = document.getElementById('highLabel');
+        const statusBox = document.getElementById('statusBox');
+
+        function update() {
+            const conf = parseInt(confSelect.value);
+            const n = parseInt(nSlider.value);
+            
+            // Critical Z values for 90, 95, 99
+            const zMap = { "90": 1.645, "95": 1.96, "99": 2.576 };
+            const z = zMap[conf.toString()];
+            
+            // Half-width of interval: z * (sigma / sqrt(n))
+            const sigma = 100; // Fixed for visual scale
+            const width = z * (sigma / Math.sqrt(n));
+            
+            const centerX = 400 + (Math.sin(Date.now() / 2000) * 10); // Slight drift
+            const x1 = centerX - width;
+            const x2 = centerX + width;
+            
+            netLine.setAttribute('x1', x1);
+            netLine.setAttribute('x2', x2);
+            center.setAttribute('cx', centerX);
+            
+            lowLabel.setAttribute('x', x1);
+            highLabel.setAttribute('x', x2);
+            
+            lowLabel.textContent = (x1 / 10).toFixed(1);
+            highLabel.textContent = (x2 / 10).toFixed(1);
+
+            // Capture logic
+            const truth = 400;
+            if (x1 <= truth && x2 >= truth) {
+                statusBox.innerText = "Truth Captured";
+                statusBox.className = "p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-xl text-emerald-400 font-black italic text-xs uppercase tracking-widest";
+            } else {
+                statusBox.innerText = "Truth Escaped";
+                statusBox.className = "p-4 bg-rose-500/10 border border-rose-500/20 rounded-xl text-rose-400 font-black italic text-xs uppercase tracking-widest";
+            }
+        }
+
+        setInterval(update, 50); // Live drift animation
+        confSelect.addEventListener('change', update);
+        nSlider.addEventListener('input', update);
+    </script>
+</body>
+</html>

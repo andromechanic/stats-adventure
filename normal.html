@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Normal Distribution | Andromechanic's Stats Adventure</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="vguide.css">
+</head>
+<body class="p-4 md:p-16">
+    <div class="max-w-4xl mx-auto">
+        <!-- Main Header -->
+        <header class="text-center mb-24">
+            <div class="badge bg-blue-100 text-blue-700 mb-6 uppercase tracking-[0.2em] font-bold">
+                Continuous Adventures
+            </div>
+            <h1 class="text-5xl md:text-6xl font-black italic tracking-tighter mb-6 title-gradient leading-tight">
+                Normal <br> Distribution
+            </h1>
+            <p class="text-xl text-slate-400 font-light tracking-wide italic">
+                The King of Shapes: Symmetry, Centrality, and the Bell Curve
+            </p>
+        </header>
+
+        <!-- 01 The Hook -->
+        <section class="card border-t-8 border-blue-500">
+            <div class="flex items-center gap-3 mb-8">
+                <span class="w-10 h-10 rounded-xl bg-blue-500 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-blue-200">01</span>
+                <h2 class="text-3xl font-extrabold tracking-tight text-slate-800">The Hook</h2>
+            </div>
+            <p class="text-lg text-slate-600 leading-relaxed mb-6 italic">
+                From human heights to test scores, the Universe loves the Normal Distribution.
+            </p>
+            <p class="text-sm text-slate-500 mb-8 leading-relaxed">
+                Also known as the <strong>Gaussian Distribution</strong>, this curve appears whenever independent random variables are added together. It is completely defined by two parameters: its <a href="central_tendency.html" class="text-blue-500 underline underline-offset-4 decoration-1 font-bold italic text-xs">Mean (\(\mu\))</a> and its <a href="spread.html" class="text-rose-500 underline underline-offset-4 decoration-1 font-bold italic text-xs">Std Dev (\(\sigma\))</a>.
+            </p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="p-4 bg-blue-50 rounded-2xl border border-blue-100 text-[10px] text-center font-black uppercase tracking-widest text-blue-700 italic">Symmetrical</div>
+                <div class="p-4 bg-blue-50 rounded-2xl border border-blue-100 text-[10px] text-center font-black uppercase tracking-widest text-blue-700 italic">Bell Shaped</div>
+                <div class="p-4 bg-blue-50 rounded-2xl border border-blue-100 text-[10px] text-center font-black uppercase tracking-widest text-blue-700 italic">Mean = Median = Mode</div>
+                <div class="p-4 bg-blue-50 rounded-2xl border border-blue-100 text-[10px] text-center font-black uppercase tracking-widest text-blue-700 italic">Total Area = 1</div>
+            </div>
+        </section>
+
+        <!-- 02 The Core Logic -->
+        <section class="card border-t-8 border-indigo-400">
+            <div class="flex items-center gap-3 mb-8">
+                <span class="w-10 h-10 rounded-xl bg-indigo-400 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-indigo-200">02</span>
+                <h2 class="text-3xl font-extrabold tracking-tight text-slate-800">The Mathematical Power</h2>
+            </div>
+            <div class="bg-slate-900 rounded-[2.5rem] p-12 text-white text-center shadow-xl mb-10 relative overflow-hidden">
+                <p class="text-3xl md:text-5xl math-font font-black italic">
+                    \( f(x) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{1}{2}(\frac{x-\mu}{\sigma})^2} \)
+                </p>
+                <div class="absolute -right-10 -bottom-10 opacity-5 pointer-events-none">
+                    <p class="text-[120px] font-black italic uppercase tracking-tighter">Gauss</p>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="p-8 bg-blue-50 rounded-3xl border border-blue-100">
+                    <h4 class="text-xs font-black uppercase text-blue-400 mb-2">The Z-Score Transformation</h4>
+                    <p class="text-sm text-slate-700 italic">Any Normal Distribution can be mapped to a <strong>Standard Normal</strong> (\(\mu=0, \sigma=1\)) using:</p>
+                    <p class="text-2xl math-font mt-4 text-center">\( Z = \frac{x - \mu}{\sigma} \)</p>
+                </div>
+                <div class="p-8 bg-indigo-50 rounded-3xl border border-indigo-100">
+                    <h4 class="text-xs font-black uppercase text-indigo-400 mb-2">Central Limit Theorem</h4>
+                    <p class="text-sm text-slate-700 italic">"The sum of enough random variables will always look normal, no matter what their original distribution was."</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 03 Interactive Prop -->
+        <section class="card border-t-8 border-rose-500">
+            <div class="flex items-center gap-3 mb-8">
+                <span class="w-10 h-10 rounded-xl bg-rose-500 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-rose-200">03</span>
+                <h2 class="text-3xl font-extrabold tracking-tight text-slate-800">Interactive: The Dynamic Curve</h2>
+            </div>
+            
+            <div class="bg-slate-900 rounded-[2.5rem] p-10 mb-10 shadow-2xl relative overflow-hidden">
+                <div class="h-64 mb-10">
+                    <svg id="curveCanvas" viewBox="0 0 1000 300" class="w-full h-full">
+                        <path id="curvePath" d="" fill="rgba(37, 99, 235, 0.2)" stroke="#2563eb" stroke-width="4" stroke-linecap="round"/>
+                        <line x1="0" y1="280" x2="1000" y2="280" stroke="rgba(255,255,255,0.1)" stroke-width="2"/>
+                        <line id="meanLine" x1="500" y1="280" x2="500" y2="50" stroke="#f59e0b" stroke-width="2" stroke-dasharray="8,4" opacity="0.5"/>
+                    </svg>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-10">
+                    <div class="space-y-4">
+                        <label class="flex justify-between text-xs font-black text-blue-400 uppercase tracking-widest">
+                            Mean (\(\mu\)) <span id="meanText">500</span>
+                        </label>
+                        <input type="range" id="meanSlider" min="200" max="800" value="500" class="w-full accent-blue-500 bg-slate-800 rounded-lg">
+                    </div>
+                    <div class="space-y-4">
+                        <label class="flex justify-between text-xs font-black text-rose-400 uppercase tracking-widest">
+                            Std Dev (\(\sigma\)) <span id="sigmaText">100</span>
+                        </label>
+                        <input type="range" id="sigmaSlider" min="50" max="250" value="100" class="w-full accent-rose-500 bg-slate-800 rounded-lg">
+                    </div>
+                </div>
+            </div>
+            <p class="text-xs text-center text-slate-400 italic">"Increasing \(\sigma\) makes the curve shorter and wider, while changing \(\mu\) slides the whole mountain left or right."</p>
+        </section>
+
+        <!-- 04 The Verdict -->
+        <section class="mb-32">
+            <h2 class="text-sm font-black uppercase text-slate-300 mb-12 tracking-[0.5em] text-center italic">04. The Statistical Verdict</h2>
+            <div class="bg-blue-900 rounded-[4rem] p-16 text-white shadow-3xl text-center border-b-[12px] border-blue-500 relative overflow-hidden">
+                <div class="relative z-10">
+                    <h3 class="text-3xl font-black italic mb-10 text-white tracking-widest italic tracking-widest underline decoration-white/20 underline-offset-8 decoration-4">The Empirical Rule</h3>
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div class="text-center">
+                            <span class="block text-4xl font-black italic text-blue-400">68%</span>
+                            <p class="text-[10px] uppercase font-bold opacity-40 mt-2">Within 1\(\sigma\)</p>
+                        </div>
+                        <div class="text-center border-x border-white/10">
+                            <span class="block text-4xl font-black italic text-blue-400">95%</span>
+                            <p class="text-[10px] uppercase font-bold opacity-40 mt-2">Within 2\(\sigma\)</p>
+                        </div>
+                        <div class="text-center">
+                            <span class="block text-4xl font-black italic text-blue-400">99.7%</span>
+                            <p class="text-[10px] uppercase font-bold opacity-40 mt-2">Within 3\(\sigma\)</p>
+                        </div>
+                    </div>
+                    <p class="text-xs text-slate-400 mt-12 italic max-w-lg mx-auto">"If a data point is more than 3\(\sigma\) away from the mean, it's a structural outlier or a very rare event."</p>
+                </div>
+                <!-- Background Decoration -->
+                <div class="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none select-none overflow-hidden">
+                    <p class="text-[300px] font-black absolute -top-20 -left-20">NORMAL</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer Overlay -->
+        <footer class="text-center pb-32">
+            <a href="index.html" class="inline-block px-12 py-4 rounded-full bg-slate-900 text-white font-black uppercase tracking-widest text-xs hover:bg-slate-800 transition-colors shadow-sm mb-12">
+                Back to Adventure Home
+            </a>
+            <p class="mt-2 text-[10px] opacity-20 font-black uppercase tracking-[0.8em]">End of Normal Adventure - Andromechanic</p>
+        </footer>
+    </div>
+
+    <!-- Script -->
+    <script>
+        const canvas = document.getElementById('curveCanvas');
+        const path = document.getElementById('curvePath');
+        const mLine = document.getElementById('meanLine');
+        const mSlider = document.getElementById('meanSlider');
+        const sSlider = document.getElementById('sigmaSlider');
+        const mText = document.getElementById('meanText');
+        const sText = document.getElementById('sigmaText');
+
+        function normalPDF(x, mu, sigma) {
+            const factor = 1 / (sigma * Math.sqrt(2 * Math.PI));
+            const exponent = -Math.pow(x - mu, 2) / (2 * Math.pow(sigma, 2));
+            return factor * Math.exp(exponent);
+        }
+
+        function updateCurve() {
+            const mu = parseFloat(mSlider.value);
+            const sigma = parseFloat(sSlider.value);
+            
+            mText.innerText = Math.round(mu);
+            sText.innerText = Math.round(sigma);
+            
+            let d = "M -50 280 "; 
+            for (let x = -50; x <= 1050; x += 5) {
+                const y = 280 - (normalPDF(x, mu, sigma) * 150 * 100); 
+                d += `L ${x} ${y} `;
+            }
+            d += " L 1050 280 Z";
+            path.setAttribute('d', d);
+            
+            mLine.setAttribute('x1', mu);
+            mLine.setAttribute('x2', mu);
+        }
+
+        mSlider.addEventListener('input', updateCurve);
+        sSlider.addEventListener('input', updateCurve);
+        updateCurve();
+    </script>
+</body>
+</html>
